@@ -16,19 +16,23 @@ public class GoToCoverNode : Node
 
     public override NodeState Evaluate()
     {
-        Transform cover = ai.GetBestCover();
-        id()
-        ai.SetColor(Color.yellow);
-        float distance = Vector3.Distance(target.position, agent.transform.position);
-        if(distance < 0.2f){
-            agent.isStopped = false;
-            agent.SetDestination(target.position);
-            return NodeState.RUNNING;
-        }
-        else
-        {
-            agent.isStopped = true;
-            return NodeState.SUCCES;
-        }
+        throw new System.NotImplementedException();
     }
+
+    // public override NodeState Evaluate()
+    // {
+    //     Transform cover = ai.GetBestCover();
+    //     ai.SetColor(Color.yellow);
+    //     float distance = Vector3.Distance(target.position, agent.transform.position);
+    //     if(distance < 0.2f){
+    //         agent.isStopped = false;
+    //         agent.SetDestination(target.position);
+    //         return NodeState.RUNNING;
+    //     }
+    //     else
+    //     {
+    //         agent.isStopped = true;
+    //         return NodeState.SUCCES;
+    //     }
+    // }
 }
