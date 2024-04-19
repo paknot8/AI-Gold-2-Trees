@@ -24,7 +24,7 @@ public class BehaviourTreeController : MonoBehaviour
 
         // Add your behavior nodes here
         nodes.Add(new MoveAwayBehaviour(transform));
-        nodes.Add(new ChaseBehaviour(gameObject));
+        nodes.Add(new ChaseBehaviour(transform));
         nodes.Add(new ShootBehaviour(transform));
         nodes.Add(new PatrolBehaviour(transform));
 

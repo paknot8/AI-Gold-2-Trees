@@ -6,9 +6,9 @@ public class ChaseBehaviour : Node
     public float chaseSpeed = 5f; // Speed at which the AI chases the player
     private GameObject aiGameObject; // Reference to the AI GameObject
 
-    public ChaseBehaviour(GameObject aiGameObject)
+    public ChaseBehaviour(Transform playerTransform)
     {
-        this.aiGameObject = aiGameObject;
+        this.playerTransform = playerTransform;
     }
 
     public override bool Execute()
