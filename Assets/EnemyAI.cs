@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class EnemyAI : MonoBehaviour
 {
-    [SerializeField] private float chasingRange;
-    [SerializeField] private float shootingRange;
+    [SerializeField] private float chasingRange = 5f;
+    [SerializeField] private float shootingRange = 5f;
     
     private Transform playerTransform;
 
@@ -13,7 +13,7 @@ public class EnemyAI : MonoBehaviour
     private void Start()
     {
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
-        chaseBehaviour = new ChaseBehaviour(transform); // Passes transform
+        chaseBehaviour = new ChaseBehaviour(transform, transform); // Passes transform
         shootBehaviour = new ShootBehaviour(transform); // Passes transform
     }
 
@@ -41,5 +41,15 @@ public class EnemyAI : MonoBehaviour
     public bool IsPlayerWithinShootingRange()
     {
         return Vector3.Distance(transform.position, playerTransform.position) <= shootingRange;
+    }
+
+    // Draw Gizmos for the chasing and shooting ranges
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, chasingRange);
+
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, shootingRange);
     }
 }

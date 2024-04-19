@@ -2,23 +2,27 @@ using UnityEngine;
 
 public class ChaseBehaviour : Node
 {
-    public Transform playerTransform; // Reference to the player's transform
-    public float chaseSpeed = 5f; // Speed at which the AI chases the player
-    private GameObject aiGameObject; // Reference to the AI GameObject
+    private Transform enemyTransform;
+    private Transform playerTransform;
+    private float moveSpeed = 3f; // Adjust this speed as needed
 
-    public ChaseBehaviour(Transform playerTransform)
+    public ChaseBehaviour(Transform enemyTransform, Transform playerTransform)
     {
+        this.enemyTransform = enemyTransform;
         this.playerTransform = playerTransform;
     }
 
     public override bool Execute()
     {
         // Calculate direction towards the player
-        Vector3 chaseDirection = playerTransform.position - aiGameObject.transform.position;
-        chaseDirection.y = 0; // Keep the AI at the same height
+        Vector3 direction = (playerTransform.position - enemyTransform.position).normalized;
 
-        // Normalize and move towards the player
-        aiGameObject.transform.position += chaseDirection.normalized * chaseSpeed * Time.deltaTime;
-        return true;
+        // Move the enemy towards the player
+        enemyTransform.position += direction * moveSpeed * Time.deltaTime;
+
+        // Optionally, rotate the enemy to face the player
+        enemyTransform.rotation = Quaternion.LookRotation(direction);
+
+        return true; // Return true to indicate that the chase behavior was executed
     }
 }
