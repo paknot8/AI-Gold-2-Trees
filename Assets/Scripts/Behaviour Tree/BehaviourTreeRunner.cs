@@ -9,11 +9,16 @@ public class BehaviourTreeRunner : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        tree = ScriptableObject.CreateInstance<BehaviourTree>();        
+        tree = ScriptableObject.CreateInstance<BehaviourTree>(); 
+               
         var log = ScriptableObject.CreateInstance<DebugLogNode>();
         log.message = "Hello Test message";
 
-        tree.rootNode = log;
+        var loop = ScriptableObject.CreateInstance<RepeatNode>();
+        loop.child = log;
+
+        // the final thing it will execute
+        tree.rootNode = loop;
     }
 
     // Update is called once per frame
