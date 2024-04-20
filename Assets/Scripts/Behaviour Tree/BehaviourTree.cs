@@ -1,7 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor;
 
 [CreateAssetMenu()]
 public class BehaviourTree : ScriptableObject
@@ -19,27 +17,6 @@ public class BehaviourTree : ScriptableObject
         }
         return treeState;
     }
-
-    // // Create node
-    // public Node CreateNode(System.Type type)
-    // {
-    //     Node node = ScriptableObject.CreateInstance(type) as Node;
-    //     node.name = type.Name;
-    //     node.guid = GUID.Generate().ToString();
-    //     nodes.Add(node);
-
-    //     AssetDatabase.AddObjectToAsset(node, this);
-    //     AssetDatabase.SaveAssets();
-    //     return node;
-    // }
-
-    // // Destroy Node
-    // public void DeleteNode(Node node)
-    // {
-    //     nodes.Remove(node);
-    //     AssetDatabase.RemoveObjectFromAsset(node);
-    //     AssetDatabase.SaveAssets();
-    // }
 }
 
 

@@ -1,12 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class BehaviourTreeRunner : MonoBehaviour
 {
     BehaviourTree tree;
 
-    // Start is called before the first frame update
     void Start()
     {
         tree = ScriptableObject.CreateInstance<BehaviourTree>(); 
@@ -38,11 +35,9 @@ public class BehaviourTreeRunner : MonoBehaviour
         loop.child = log1;
         
 
-        // the final thing it will execute
         tree.rootNode = sequence;
     }
 
-    // Update is called once per frame
     void Update()
     {
         tree.Update();
