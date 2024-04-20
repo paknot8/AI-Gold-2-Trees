@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 
 // --- The Node Class ---
-namespace BehaviorTrees
+namespace BehaviorTree
 {
     // #1
     // Make the Node enum

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 // --- Generic Behaviour Tree --- //
-namespace BehaviorTrees
+namespace BehaviorTree
 {
     public abstract class Tree : MonoBehaviour
     {
