@@ -1,12 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 
 [CreateAssetMenu()]
 public class BehaviourTree : ScriptableObject
 {
     public Node rootNode;
     public Node.State treeState = Node.State.Running;
+
+    public List<Node> nodes = new List<Node>(); // you can always create a node and link it up, it can be detached.
 
     public Node.State Update()
     {
@@ -16,4 +19,27 @@ public class BehaviourTree : ScriptableObject
         }
         return treeState;
     }
+
+    // // Create node
+    // public Node CreateNode(System.Type type)
+    // {
+    //     Node node = ScriptableObject.CreateInstance(type) as Node;
+    //     node.name = type.Name;
+    //     node.guid = GUID.Generate().ToString();
+    //     nodes.Add(node);
+
+    //     AssetDatabase.AddObjectToAsset(node, this);
+    //     AssetDatabase.SaveAssets();
+    //     return node;
+    // }
+
+    // // Destroy Node
+    // public void DeleteNode(Node node)
+    // {
+    //     nodes.Remove(node);
+    //     AssetDatabase.RemoveObjectFromAsset(node);
+    //     AssetDatabase.SaveAssets();
+    // }
 }
+
+
