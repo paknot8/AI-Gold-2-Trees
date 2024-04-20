@@ -32,5 +32,7 @@ namespace BehaviorTrees
         protected abstract Node SetupTree();
     
         // after this prepare 2 Composite Nodes
+        // The Sequence and Selector
+        // Go to #15
     }
 }
