@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// This is a Composite Node
 public class SequenceNode : IBaseNode
 {
     private List<IBaseNode> children;
