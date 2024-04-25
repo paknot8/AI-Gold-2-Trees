@@ -17,11 +17,13 @@ public class EnemyAgent : MonoBehaviour
     {
         List<IBaseNode> children = new()
         {
-            new PatrolNode(enemyAgent, waypoints), // als dit false return dan gaat het niet door "FAIL all below"
+            new DetectionNode(enemyAgent,player,30f), // Just to initialize the max detectionDistance
+            new DebugNode("Detecting Player"),
+            new PatrolNode(enemyAgent, waypoints), // If this is false then go to next node
             new DebugNode("Moving to the Waypoint"),
-            new ShootNode(enemyAgent, player, bulletPrefab, 10f),
+            new ShootNode(enemyAgent,player,bulletPrefab,10f),
             new DebugNode("Shoot a Bullet"),
-            new MoveAwayNode(enemyAgent, player, 5f),
+            new MoveAwayNode(enemyAgent,player,4f),
             new DebugNode("MoveAway"),
             
         };
