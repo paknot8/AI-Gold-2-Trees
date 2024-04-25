@@ -23,7 +23,7 @@ public class EnemyAgent : MonoBehaviour
             new DebugNode("Moving to the Waypoint"),
             new ShootNode(enemyAgent,player,bulletPrefab,10f),
             new DebugNode("Shoot a Bullet"),
-            new MoveAwayNode(enemyAgent,player,4f),
+            new MoveAwayNode(enemyAgent,player,5f),
             new DebugNode("MoveAway"),
         };
         behaviourTree = new SequenceNode(children);
