@@ -2,7 +2,8 @@ using UnityEngine;
 
 public abstract class BaseNode : ScriptableObject
 {
-    public enum State {
+    public enum State 
+    {
         Running,
         Failure,
         Success
