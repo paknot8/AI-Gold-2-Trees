@@ -5,16 +5,15 @@ public class MoveAwayNode : IBaseNode
 {
     private NavMeshAgent enemyAgent;
     private Transform player;
-    private float moveAwayDistance; // Default distance from stopping distance of agent
-    private float stuckTimer = 3; // Time to consider agent stuck
-    private Vector3 previousPosition; // Track previous position
+    private float moveAwayDistance;
+    private float timeToConsiderStuck = 3f; // Time to consider agent stuck
+    private Vector3 previousPosition;
 
     public MoveAwayNode(NavMeshAgent enemyAgent, Transform playerTransform, float moveAwayDistance)
     {
         this.enemyAgent = enemyAgent;
         player = playerTransform;
         this.moveAwayDistance = moveAwayDistance;
-        previousPosition = enemyAgent.transform.position;
     }
 
     public virtual bool Update()
@@ -23,42 +22,55 @@ public class MoveAwayNode : IBaseNode
         float rangeFromStoppingDistance = enemyAgent.stoppingDistance + moveAwayDistance;
 
         // Check if player is within range
-        if (Vector3.Distance(enemyAgent.transform.position, player.position) <= rangeFromStoppingDistance)
+        if (IsPlayerWithinRange(rangeFromStoppingDistance))
         {
-            // Calculate direction and target position away from player
-            Vector3 moveDirection = enemyAgent.transform.position - player.position;
-            moveDirection.y = 0f;
-            moveDirection.Normalize();
-            Vector3 targetPosition = enemyAgent.transform.position + moveDirection * moveAwayDistance;
-
-            // Check if target is valid on NavMesh
-            if (NavMesh.SamplePosition(targetPosition, out NavMeshHit hit, 1.0f, NavMesh.AllAreas))
+            Vector3 targetPosition = CalculateTargetPositionAwayFromPlayer();
+            if (IsTargetValidOnNavMesh(targetPosition))
             {
                 enemyAgent.SetDestination(targetPosition);
-                previousPosition = enemyAgent.transform.position; // Reset previous position
-                stuckTimer = 0; // Reset stuck timer
+                ResetStuckTimer();
                 return true;
-            }
-            else
-            {
-                return false;
             }
         }
         else
         {
-            // Check for stuck state (choose your method - time or distance)
             if (IsAgentStuck())
             {
                 return false;
             }
-            return false;
         }
+
+        return false;
+    }
+
+    private bool IsPlayerWithinRange(float range)
+    {
+        return Vector3.Distance(enemyAgent.transform.position, player.position) <= range;
+    }
+
+    private Vector3 CalculateTargetPositionAwayFromPlayer()
+    {
+        Vector3 moveDirection = enemyAgent.transform.position - player.position;
+        moveDirection.y = 0f;
+        moveDirection.Normalize();
+        return enemyAgent.transform.position + moveDirection * moveAwayDistance;
+    }
+
+    private bool IsTargetValidOnNavMesh(Vector3 targetPosition)
+    {
+        return NavMesh.SamplePosition(targetPosition, out _, 1.0f, NavMesh.AllAreas);
+    }
+
+    private void ResetStuckTimer()
+    {
+        previousPosition = enemyAgent.transform.position;
+        timeToConsiderStuck = 3f;
     }
 
     private bool IsAgentStuck()
     {
         float distance = Vector3.Distance(enemyAgent.transform.position, previousPosition);
-        stuckTimer -= Time.deltaTime;
-        return (distance < 0.1f && stuckTimer <= 0); // Adjust thresholds as needed
+        timeToConsiderStuck -= Time.deltaTime;
+        return (distance < 0.1f && timeToConsiderStuck <= 0);
     }
 }

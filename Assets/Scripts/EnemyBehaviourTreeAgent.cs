@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class EnemyAgent : MonoBehaviour
+public class EnemyBehaviourTreeAgent : MonoBehaviour
 {
     private IBaseNode behaviourTree = null;
 
