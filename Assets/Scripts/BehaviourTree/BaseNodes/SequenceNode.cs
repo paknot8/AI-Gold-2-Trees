@@ -11,18 +11,21 @@ public class SequenceNode : IBaseNode
         children = childs;
     }
 
+    // If 1st node of the sequence fails then it goes to the second node.
+    // if the 1st and 2nd node fails, then it goes to the third.
+    // The sequence are in order, so the node at the bottom will execute and not the above, until false
     public virtual bool Update() 
     {
         foreach(IBaseNode node in children) 
         {
             bool result = node.Update();
 
-            if(!result) 
+            // Has the above node Failed?
+            if(!result)
             {
                 return false;
             }
         }
-
-        return true;
+        return true; 
     }
 }

@@ -13,7 +13,7 @@ public class WalkNode : IBaseNode
 
     public virtual bool Update() 
     {
-        Debug.Log($"Walk to {destination}");
+        Debug.Log(" " + destination);
         return true;
     }
 }

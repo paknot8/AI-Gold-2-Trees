@@ -26,25 +26,40 @@ public class PatrolNode : IBaseNode
         }
 
         // Check if we have reached the current waypoint
+        // Move to the next waypoint
         if (enemyAgent.remainingDistance < 0.5f)
         {
-            // Move to the next waypoint
             SetDestinationToNextWaypoint();
         }
     }
 
     private void SetDestinationToNextWaypoint()
     {
-        // Update the current waypoint index
-        currentWaypointIndex = (currentWaypointIndex + 1) % waypoints.Count;
-
-        // Set the destination to the next waypoint
-        enemyAgent.SetDestination(waypoints[currentWaypointIndex].position);
+        currentWaypointIndex = (currentWaypointIndex + 1) % waypoints.Count; // Update the current waypoint index
+        enemyAgent.SetDestination(waypoints[currentWaypointIndex].position); // Set the destination to the next waypoint
     }
 
     public bool Update()
     {
-        MoveToWaypoint();
-        return true;
+        if (waypoints == null)
+        {
+            Debug.LogError("Waypoints are not assigned!");
+            return false;
+        }
+        else
+        {
+            MoveToWaypoint();
+            return true;
+        }
+    }
+
+    // Draw gizmos to visualize waypoints in the Unity editor, this will be called automatically
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.yellow;
+        foreach (Transform waypoint in waypoints)
+        {
+            Gizmos.DrawSphere(waypoint.position, 1f);
+        }
     }
 }
