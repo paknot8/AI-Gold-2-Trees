@@ -14,7 +14,7 @@ public class MoveAwayNode : IBaseNode
         this.moveAwayDistance = moveAwayDistance;
     }
 
-    public bool Update()
+    public virtual bool Update()
     {
         // Calculate the range from the stopping distance of the agent
         float rangeFromStoppingDistance = enemyAgent.stoppingDistance + moveAwayDistance;

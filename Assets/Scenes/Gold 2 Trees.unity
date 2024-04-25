@@ -492,7 +492,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30f8a01ac24bf9b4a8a9dec123bb991f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerTransform: {fileID: 1190216769}
+  player: {fileID: 1190216769}
+  bulletPrefab: {fileID: 975213960720004372, guid: 198e208c5eacb9a46a9c503798b22486, type: 3}
   waypoints:
   - {fileID: 53930447}
   - {fileID: 1456752761}
@@ -594,7 +595,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 506453152}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.25693455, y: 0.0020446295, z: -0.0005435861, w: 0.9664265}
+  m_LocalRotation: {x: 0.25693452, y: 0.0020445941, z: -0.00054357655, w: 0.9664265}
   m_LocalPosition: {x: 6.023781, y: 11.680052, z: -11.84371}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -878,7 +879,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.25693455, y: 0.0020446295, z: -0.0005435861, w: 0.9664265}
+  m_LocalRotation: {x: 0.25693452, y: 0.0020445941, z: -0.00054357655, w: 0.9664265}
   m_LocalPosition: {x: 6.023781, y: 11.680052, z: -11.84371}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0

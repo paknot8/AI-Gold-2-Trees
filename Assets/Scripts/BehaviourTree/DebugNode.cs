@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WalkNode : IBaseNode
+public class DebugNode : IBaseNode
 {
     private string destination;
 
-    public WalkNode(string destination) 
+    public DebugNode(string destination) 
     {
         this.destination = destination;
     }

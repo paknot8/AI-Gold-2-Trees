@@ -39,7 +39,7 @@ public class PatrolNode : IBaseNode
         enemyAgent.SetDestination(waypoints[currentWaypointIndex].position); // Set the destination to the next waypoint
     }
 
-    public bool Update()
+    public virtual bool Update()
     {
         if (waypoints == null)
         {
