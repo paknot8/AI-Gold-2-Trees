@@ -25,7 +25,6 @@ public class EnemyAgent : MonoBehaviour
             new DebugNode("Shoot a Bullet"),
             new MoveAwayNode(enemyAgent,player,4f),
             new DebugNode("MoveAway"),
-            
         };
         behaviourTree = new SequenceNode(children);
     }
