@@ -7,6 +7,6 @@ public class ShootNode : IBaseNode
 
     bool IBaseNode.Update()
     {
-        throw new System.NotImplementedException();
+        return false;
     }
 }
