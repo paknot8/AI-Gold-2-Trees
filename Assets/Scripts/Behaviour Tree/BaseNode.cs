@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public abstract class Node : ScriptableObject
+public abstract class BaseNode : ScriptableObject
 {
     public enum State {
         Running,

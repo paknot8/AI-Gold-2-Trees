@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class DecoratorNode : Node
+public abstract class DecoratorNode : BaseNode
 {
-    public Node child;
+    public BaseNode child;
 }

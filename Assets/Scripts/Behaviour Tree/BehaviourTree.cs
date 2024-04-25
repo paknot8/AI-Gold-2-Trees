@@ -4,12 +4,12 @@ using UnityEngine;
 [CreateAssetMenu()]
 public class BehaviourTree : ScriptableObject
 {
-    public Node rootNode;
-    public Node.State treeState = Node.State.Running;
+    public BaseNode rootNode;
+    public BaseNode.State treeState = BaseNode.State.Running;
 
-    public Node.State Update()
+    public BaseNode.State Update()
     {
-        if(rootNode.state == Node.State.Running)
+        if(rootNode.state == BaseNode.State.Running)
         {
             treeState = rootNode.Update();
         }
