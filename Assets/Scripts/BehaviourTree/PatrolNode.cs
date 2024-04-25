@@ -52,14 +52,4 @@ public class PatrolNode : IBaseNode
             return true;
         }
     }
-
-    // Draw gizmos to visualize waypoints in the Unity editor, this will be called automatically
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.yellow;
-        foreach (Transform waypoint in waypoints)
-        {
-            Gizmos.DrawSphere(waypoint.position, 1f);
-        }
-    }
 }

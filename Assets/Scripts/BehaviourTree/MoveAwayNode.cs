@@ -6,50 +6,59 @@ public class MoveAwayNode : IBaseNode
     private NavMeshAgent enemyAgent;
     private Transform player;
     private float moveAwayDistance; // Default distance from stopping distance of agent
+    private float stuckTimer = 3; // Time to consider agent stuck
+    private Vector3 previousPosition; // Track previous position
 
     public MoveAwayNode(NavMeshAgent enemyAgent, Transform playerTransform, float moveAwayDistance)
     {
         this.enemyAgent = enemyAgent;
         player = playerTransform;
         this.moveAwayDistance = moveAwayDistance;
+        previousPosition = enemyAgent.transform.position;
     }
 
     public virtual bool Update()
     {
-        // Calculate the range from the stopping distance of the agent
+        // Calculate range from stopping distance
         float rangeFromStoppingDistance = enemyAgent.stoppingDistance + moveAwayDistance;
 
         // Check if player is within range
         if (Vector3.Distance(enemyAgent.transform.position, player.position) <= rangeFromStoppingDistance)
         {
-            // Calculate direction away from the player
+            // Calculate direction and target position away from player
             Vector3 moveDirection = enemyAgent.transform.position - player.position;
-            moveDirection.y = 0f; // Optional: Keep the movement in the horizontal plane only
+            moveDirection.y = 0f;
             moveDirection.Normalize();
-
-            // Calculate the position to move away from the player
             Vector3 targetPosition = enemyAgent.transform.position + moveDirection * moveAwayDistance;
 
-            // Move towards the target position
-            enemyAgent.SetDestination(targetPosition);
-            return true;
+            // Check if target is valid on NavMesh
+            if (NavMesh.SamplePosition(targetPosition, out NavMeshHit hit, 1.0f, NavMesh.AllAreas))
+            {
+                enemyAgent.SetDestination(targetPosition);
+                previousPosition = enemyAgent.transform.position; // Reset previous position
+                stuckTimer = 0; // Reset stuck timer
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
-        else 
+        else
         {
+            // Check for stuck state (choose your method - time or distance)
+            if (IsAgentStuck())
+            {
+                return false;
+            }
             return false;
         }
     }
 
-    // Draw gizmos to visualize range from the player and the position where the enemy will move away to
-    private void OnDrawGizmos()
+    private bool IsAgentStuck()
     {
-        // Draw range from the player
-        float rangeFromStoppingDistance = enemyAgent.stoppingDistance + moveAwayDistance;
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(enemyAgent.transform.position, rangeFromStoppingDistance);
-
-        // Draw position where the enemy will move away to
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawSphere(enemyAgent.transform.position + Vector3.up * 0.1f, 1f);
+        float distance = Vector3.Distance(enemyAgent.transform.position, previousPosition);
+        stuckTimer -= Time.deltaTime;
+        return (distance < 0.1f && stuckTimer <= 0); // Adjust thresholds as needed
     }
 }

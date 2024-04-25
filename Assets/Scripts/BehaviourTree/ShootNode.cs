@@ -42,11 +42,4 @@ public class ShootNode : IBaseNode
         bullet.GetComponent<Rigidbody>().velocity = direction * bulletSpeed;
         GameObject.Destroy(bullet, bulletLifetime);
     }
-
-    // Draw gizmo to visualize the shooting distance
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.blue;
-        Gizmos.DrawWireSphere(enemyAgent.transform.position, shootingDistance);
-    }
 }

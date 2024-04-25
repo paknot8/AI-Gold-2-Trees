@@ -19,10 +19,4 @@ public class DetectionNode : IBaseNode
     {
         return true;
     }
-
-    private void OnDrawGizmos() // Optional for visualization
-    {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(enemyAgent.transform.position, detectionDistance);
-    }
 }
