@@ -29,7 +29,7 @@ public class EnemyBehaviourTreeAgent : MonoBehaviour
             new ShootNode(enemyAgent,player,bulletPrefab,bulletFireDistance),
             new DebugNode("Shoot a Bullet"),
 
-            new MoveAwayNode(enemyAgent,player,moveAwayDistance),
+            new RetreatNode(enemyAgent,player,moveAwayDistance),
             new DebugNode("MoveAway"),
         };
         behaviourTree = new SequenceNode(children);

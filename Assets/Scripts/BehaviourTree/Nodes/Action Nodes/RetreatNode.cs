@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-public class MoveAwayNode : IBaseNode
+public class RetreatNode : IBaseNode
 {
     private readonly NavMeshAgent enemyAgent;
     private readonly Transform player;
@@ -9,7 +9,7 @@ public class MoveAwayNode : IBaseNode
     private float timeToConsiderStuck = 3f; // Time to consider agent stuck
     private Vector3 previousPosition;
 
-    public MoveAwayNode(NavMeshAgent enemyAgent, Transform playerTransform, float moveAwayDistance)
+    public RetreatNode(NavMeshAgent enemyAgent, Transform playerTransform, float moveAwayDistance)
     {
         this.enemyAgent = enemyAgent;
         player = playerTransform;
