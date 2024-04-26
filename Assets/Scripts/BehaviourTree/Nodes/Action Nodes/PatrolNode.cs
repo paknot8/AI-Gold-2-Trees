@@ -8,12 +8,14 @@ public class PatrolNode : IBaseNode
     private readonly Transform player;
     private readonly List<Transform> waypoints;
     private int currentWaypointIndex = 0;
+    private readonly float shootingDistance;
 
-    public PatrolNode(NavMeshAgent agent, List<Transform> waypoints, Transform player)
+    public PatrolNode(NavMeshAgent agent, List<Transform> waypoints, Transform player, float shootingDistance)
     {
         this.agent = agent;
         this.waypoints = waypoints;
         this.player = player;
+        this.shootingDistance = shootingDistance;
     }
 
     public virtual bool Update()
@@ -23,7 +25,11 @@ public class PatrolNode : IBaseNode
             Debug.LogError("Waypoints are not assigned!");
             return false;
         }
-        MoveToWaypoint();
+
+        if (Vector3.Distance(agent.transform.position, player.position) > shootingDistance)
+        {
+            MoveToWaypoint();
+        }
         return true;
     }
 

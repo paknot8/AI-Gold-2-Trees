@@ -797,7 +797,7 @@ NavMeshAgent:
   m_Speed: 3
   m_Acceleration: 20
   avoidancePriority: 50
-  m_AngularSpeed: 120
+  m_AngularSpeed: 600
   m_StoppingDistance: 2
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
@@ -825,9 +825,6 @@ MonoBehaviour:
   - {fileID: 1456752761}
   - {fileID: 50673872}
   - {fileID: 721724585}
-  maxDetectionRange: 20
-  attackDistance: 15
-  moveAwayDistance: 5
 --- !u!1 &316719987
 GameObject:
   m_ObjectHideFlags: 0

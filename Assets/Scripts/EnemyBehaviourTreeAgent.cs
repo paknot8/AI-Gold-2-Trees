@@ -13,8 +13,8 @@ public class EnemyBehaviourTreeAgent : MonoBehaviour
     public List<Transform> waypoints;
     
     [Header("Ranges")]
-    private float attackDistance = 20f;
-    private float moveAwayDistance = 10f;
+    private readonly float attackDistance = 15f;
+    private readonly float moveAwayDistance = 6f;
 
     void Start()
     {
@@ -33,7 +33,7 @@ public class EnemyBehaviourTreeAgent : MonoBehaviour
         List<IBaseNode> children = new()
         {
             //new DetectionNode(agent,player,maxDetectionRange), // Just to initialize the max detectionDistance (always true)
-            new PatrolNode(agent,waypoints,player),
+            new PatrolNode(agent,waypoints,player,attackDistance),
             new RetreatNode(agent,player,moveAwayDistance),
             new ChaseNode(agent,player,attackDistance,moveAwayDistance),
             new ShootNode(agent,player,bulletPrefab,attackDistance,moveAwayDistance),

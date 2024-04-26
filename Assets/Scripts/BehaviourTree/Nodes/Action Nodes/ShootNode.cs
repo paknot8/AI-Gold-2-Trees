@@ -37,7 +37,6 @@ public class ShootNode : IBaseNode
         }
         else
         {
-
             return false;
         }
     }

@@ -28,6 +28,6 @@ public class ChaseNode : IBaseNode
         else
         {
             return false;
-        } 
+        }
     }
 }
