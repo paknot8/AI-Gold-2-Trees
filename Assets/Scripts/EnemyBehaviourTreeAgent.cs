@@ -25,10 +25,9 @@ public class EnemyBehaviourTreeAgent : MonoBehaviour
         {
             new DetectionNode(agent,player,maxDetectionRange), // Just to initialize the max detectionDistance (always true)
             new PatrolNode(agent,waypoints,player),
-            new ChaseNode(agent,player,attackDistance,moveAwayDistance),
-            new RetreatNode(agent,player,moveAwayDistance),
+            new ChaseNode(agent,player,attackDistance),
             new ShootNode(agent,player,bulletPrefab,attackDistance),
-            
+            new RetreatNode(agent,player,moveAwayDistance),
         };
         behaviourTree = new SequenceNode(children);
     }

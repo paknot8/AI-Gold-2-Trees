@@ -6,7 +6,6 @@ public class RetreatNode : IBaseNode
     private readonly NavMeshAgent agent;
     private readonly Transform player;
     private readonly float moveAwayDistance;
-    private Vector3 previousPosition;
 
     public RetreatNode(NavMeshAgent agent, Transform player, float moveAwayDistance)
     {
@@ -23,6 +22,7 @@ public class RetreatNode : IBaseNode
         // Check if player is within range
         if (agentToPlayerDistance <= moveAwayDistance)
         {
+            Debug.Log("Retreat");
             Vector3 targetPosition = CalculateTargetPositionAwayFromPlayer();
             if (IsTargetValidOnNavMesh(targetPosition))
             {
@@ -31,7 +31,6 @@ public class RetreatNode : IBaseNode
                 return true;
             }
         }
-
         return false;
     }
 
@@ -51,6 +50,6 @@ public class RetreatNode : IBaseNode
 
     private void ResetWhenStuck()
     {
-        previousPosition = agent.transform.position;
+        Vector3 previousPosition = agent.transform.position;
     }
 }

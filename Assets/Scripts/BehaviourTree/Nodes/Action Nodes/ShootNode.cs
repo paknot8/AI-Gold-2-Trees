@@ -7,16 +7,16 @@ public class ShootNode : IBaseNode
     private readonly Transform player;
     private readonly GameObject bulletPrefab;
 
+    private readonly float shootingDistance;
     private readonly float shootInterval = 1f;
     private readonly float bulletSpeed = 10f;
     private readonly float bulletLifetime = 3f; 
-    private readonly float shootingDistance;
     private float lastShotTime = 0f;
 
-    public ShootNode(NavMeshAgent enemyAgent, Transform playerTransform, GameObject bulletPrefab, float shootingDistance)
+    public ShootNode(NavMeshAgent agent, Transform player, GameObject bulletPrefab, float shootingDistance)
     {
-        this.agent = enemyAgent;
-        this.player = playerTransform;
+        this.agent = agent;
+        this.player = player;
         this.bulletPrefab = bulletPrefab;
         this.shootingDistance = shootingDistance;
     }
@@ -27,7 +27,6 @@ public class ShootNode : IBaseNode
         if (Time.time >= lastShotTime + shootInterval 
         && Vector3.Distance(agent.transform.position, player.position) <= shootingDistance)
         {
-            agent.isStopped = true;
             agent.transform.LookAt(player.position);
             Shoot();
             lastShotTime = Time.time; // Update the last shot time
@@ -35,7 +34,6 @@ public class ShootNode : IBaseNode
         } 
         else
         {
-            agent.isStopped = false;
             return false;
         }
     }
