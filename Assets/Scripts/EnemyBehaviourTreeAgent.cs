@@ -11,6 +11,7 @@ public class EnemyBehaviourTreeAgent : MonoBehaviour
     public Transform player;
     public GameObject bulletPrefab;
     public List<Transform> waypoints;
+    
     private Color originalColor; // Variable to store the original color
 
     [Header("Ranges")]
@@ -20,8 +21,6 @@ public class EnemyBehaviourTreeAgent : MonoBehaviour
 
     private void CreateBehaviourTree()
     {
-        // This is an AND gate
-        // If a child is false it will not execute
         List<IBaseNode> children = new()
         {
             new DetectionNode(enemyAgent,player,maxDetectionRange), // Just to initialize the max detectionDistance (always true)
