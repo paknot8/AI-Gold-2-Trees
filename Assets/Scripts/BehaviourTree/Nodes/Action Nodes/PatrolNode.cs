@@ -35,28 +35,35 @@ public class PatrolNode : IBaseNode
             return;
         }
 
-        Vector3 waypointPosition = waypoints[currentWaypointIndex].position;        
-        Vector3 directionToWaypoint = (waypointPosition - agent.transform.position).normalized; // Calculate the direction towards the current waypoint
-        Vector3 agentMovementDirection = agent.velocity.normalized; // Calculate the agent's movement direction 
-        float compareDirection = Vector3.Dot(agentMovementDirection, directionToWaypoint); // Check if the agent is moving towards the waypoint by comparing directions
+        UpdateAgentColor();
 
-        // Check if we have reached the current waypoint
-        // Move to the next waypoint
-        if (agent.remainingDistance < 0.5f)
+        if (HasReachedWaypoint())
         {
             SetDestinationToNextWaypoint();
         }
+    }
 
-        // Agent is moving towards the waypoint
+    private void UpdateAgentColor()
+    {
+        Vector3 waypointPosition = waypoints[currentWaypointIndex].position;
+        Vector3 directionToWaypoint = (waypointPosition - agent.transform.position).normalized;
+        Vector3 agentMovementDirection = agent.velocity.normalized;
+        float compareDirection = Vector3.Dot(agentMovementDirection, directionToWaypoint);
+
         if (compareDirection > 0)
         {
             agent.GetComponent<Renderer>().material.color = Color.blue;
         }
     }
 
+    private bool HasReachedWaypoint()
+    {
+        return agent.remainingDistance < 0.5f;
+    }
+
     private void SetDestinationToNextWaypoint()
     {
-        currentWaypointIndex = (currentWaypointIndex + 1) % waypoints.Count; // Update the current waypoint index
-        agent.SetDestination(waypoints[currentWaypointIndex].position); // Set the destination to the next waypoint
+        currentWaypointIndex = (currentWaypointIndex + 1) % waypoints.Count;
+        agent.SetDestination(waypoints[currentWaypointIndex].position);
     }
 }

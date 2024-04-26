@@ -7,12 +7,13 @@ public class ShootNode : IBaseNode
     private readonly Transform player;
     private readonly GameObject bulletPrefab;
 
+    private readonly float moveAwayDistance;
     private readonly float shootingDistance;
     private readonly float shootInterval = 1f;
     private readonly float bulletSpeed = 10f;
     private readonly float bulletLifetime = 3f; 
     private float lastShotTime = 0f;
-    private float moveAwayDistance;
+    
 
     public ShootNode(NavMeshAgent agent, Transform player, GameObject bulletPrefab, float shootingDistance, float moveAwayDistance)
     {
@@ -32,12 +33,11 @@ public class ShootNode : IBaseNode
             agent.transform.LookAt(player.position);
             Shoot();
             lastShotTime = Time.time; // Update the last shot time
-            Debug.Log("Start Shooting");
             return true;
         }
         else
         {
-            Debug.Log("Stop Shooting");
+
             return false;
         }
     }
