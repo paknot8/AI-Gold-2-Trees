@@ -820,6 +820,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 1190216769}
   bulletPrefab: {fileID: 975213960720004372, guid: 198e208c5eacb9a46a9c503798b22486, type: 3}
+  item: {fileID: 4080587390235798641, guid: 0d1ea41f09ed0624385c24758bc329e0, type: 3}
   waypoints:
   - {fileID: 53930447}
   - {fileID: 1456752761}
@@ -2346,7 +2347,7 @@ GameObject:
   - component: {fileID: 1257128321}
   m_Layer: 0
   m_Name: Floor
-  m_TagString: Untagged
+  m_TagString: Floor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2932,19 +2933,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4080587390235798641, guid: 0d1ea41f09ed0624385c24758bc329e0, type: 3}
       propertyPath: m_Name
-      value: PickItem
-      objectReference: {fileID: 0}
-    - target: {fileID: 5388929994802819749, guid: 0d1ea41f09ed0624385c24758bc329e0, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1.3660908
-      objectReference: {fileID: 0}
-    - target: {fileID: 5388929994802819749, guid: 0d1ea41f09ed0624385c24758bc329e0, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.5144698
-      objectReference: {fileID: 0}
-    - target: {fileID: 5388929994802819749, guid: 0d1ea41f09ed0624385c24758bc329e0, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 1.3660908
+      value: Item
       objectReference: {fileID: 0}
     - target: {fileID: 5388929994802819749, guid: 0d1ea41f09ed0624385c24758bc329e0, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2989,10 +2978,6 @@ PrefabInstance:
     - target: {fileID: 6739744263551480929, guid: 0d1ea41f09ed0624385c24758bc329e0, type: 3}
       propertyPath: floor
       value: 
-      objectReference: {fileID: 1257128320}
-    - target: {fileID: 7808471989578465389, guid: 0d1ea41f09ed0624385c24758bc329e0, type: 3}
-      propertyPath: m_IsTrigger
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

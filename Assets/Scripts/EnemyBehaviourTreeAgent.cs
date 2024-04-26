@@ -10,15 +10,18 @@ public class EnemyBehaviourTreeAgent : MonoBehaviour
     private NavMeshAgent agent;
     public Transform player;
     public GameObject bulletPrefab;
+    public GameObject item;
     public List<Transform> waypoints;
+
     [Header("Ranges")]
-    private readonly float pickupDetectionDistance;
+    private readonly float pickupDetectionDistance = 20;
     private readonly float attackDistance = 15f;
     private readonly float moveAwayDistance = 6f;
 
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
+        item = gameObject;
         originalColor = GetComponent<Renderer>().material.color; // Save the original color
         CreateBehaviourTree();
     }
@@ -32,11 +35,11 @@ public class EnemyBehaviourTreeAgent : MonoBehaviour
     {
         List<IBaseNode> children = new()
         {
-            new DetectionNode(agent,player,pickupDetectionDistance),
             new PatrolNode(agent,waypoints,player,attackDistance),
             new RetreatNode(agent,player,moveAwayDistance),
             new ChaseNode(agent,player,attackDistance,moveAwayDistance),
             new ShootNode(agent,player,bulletPrefab,attackDistance,moveAwayDistance),
+            new PickupNode(agent,player,pickupDetectionDistance,attackDistance,item),
         };
 
         StatementDebugger(children); // this is only used for testing
@@ -68,6 +71,9 @@ public class EnemyBehaviourTreeAgent : MonoBehaviour
 
             Gizmos.color = Color.yellow;
             Gizmos.DrawWireSphere(agent.transform.position, moveAwayDistance);
+        
+            Gizmos.color = Color.white;
+            Gizmos.DrawWireSphere(agent.transform.position, pickupDetectionDistance);
         }
     }
 
