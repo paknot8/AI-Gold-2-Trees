@@ -9,10 +9,10 @@ public class ShootNode : IBaseNode
     private Transform playerTransform;
     private GameObject bulletPrefab;
 
-    private float shootInterval = 1f; // Time interval between each shot
-    private float bulletSpeed = 10f; // Speed of the bullet
-    private float bulletLifetime = 3f; // Lifetime of the bullet
-    private float shootingDistance; // Shooting distance
+    private readonly float shootInterval = 1f;
+    private readonly float bulletSpeed = 10f;
+    private readonly float bulletLifetime = 3f; 
+    private readonly float shootingDistance;
     private float lastShotTime = 0f;
 
     public ShootNode(NavMeshAgent enemyAgent, Transform playerTransform, GameObject bulletPrefab, float shootingDistance)
