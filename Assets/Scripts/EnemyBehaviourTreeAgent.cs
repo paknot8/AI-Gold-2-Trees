@@ -12,18 +12,23 @@ public class EnemyBehaviourTreeAgent : MonoBehaviour
     public GameObject bulletPrefab;
     public List<Transform> waypoints;
 
-    // This is an AND gate.
+    [Header("Ranges")]
+    public float detectionDistance = 30f;
+    public float bulletFireDistance = 12f;
+    public float enemyToPlayerDistance = 7f;
+
     private void CreateBehaviourTree()
     {
+        // This is an AND gate.
         List<IBaseNode> children = new()
         {
-            new DetectionNode(enemyAgent,player,30f), // Just to initialize the max detectionDistance
+            new DetectionNode(enemyAgent,player,detectionDistance), // Just to initialize the max detectionDistance (always true)
             new DebugNode("Detecting Player"),
             new PatrolNode(enemyAgent, waypoints), // If this is false then go to next node
             new DebugNode("Moving to the Waypoint"),
-            new ShootNode(enemyAgent,player,bulletPrefab,12f),
+            new ShootNode(enemyAgent,player,bulletPrefab,bulletFireDistance),
             new DebugNode("Shoot a Bullet"),
-            new MoveAwayNode(enemyAgent,player,7f),
+            new MoveAwayNode(enemyAgent,player,enemyToPlayerDistance),
             new DebugNode("MoveAway"),
         };
         behaviourTree = new SequenceNode(children);

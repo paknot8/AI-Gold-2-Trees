@@ -26,13 +26,19 @@ public class ShootNode : IBaseNode
     public virtual bool Update()
     {       
         // Check if player is within shooting distance and shoot interval is reached
-        if (Time.time >= lastShotTime + shootInterval && Vector3.Distance(enemyAgent.transform.position, playerTransform.position) <= shootingDistance)
+        if (Time.time >= lastShotTime + shootInterval 
+        && Vector3.Distance(enemyAgent.transform.position, playerTransform.position) <= shootingDistance)
         {
+            enemyAgent.isStopped = true;
             Shoot();
             lastShotTime = Time.time; // Update the last shot time
             return true;
+        } 
+        else
+        {
+            enemyAgent.isStopped = false;
+            return false;
         }
-        return false;
     }
 
     private void Shoot()
