@@ -12,28 +12,32 @@ public class ShootNode : IBaseNode
     private readonly float bulletSpeed = 10f;
     private readonly float bulletLifetime = 3f; 
     private float lastShotTime = 0f;
+    private float moveAwayDistance;
 
-    public ShootNode(NavMeshAgent agent, Transform player, GameObject bulletPrefab, float shootingDistance)
+    public ShootNode(NavMeshAgent agent, Transform player, GameObject bulletPrefab, float shootingDistance, float moveAwayDistance)
     {
         this.agent = agent;
         this.player = player;
         this.bulletPrefab = bulletPrefab;
         this.shootingDistance = shootingDistance;
+       this.moveAwayDistance = moveAwayDistance;
     }
 
     public virtual bool Update()
     {       
-        // Check if player is within shooting distance and shoot interval is reached
         if (Time.time >= lastShotTime + shootInterval 
-        && Vector3.Distance(agent.transform.position, player.position) <= shootingDistance)
+            && Vector3.Distance(agent.transform.position, player.position) < shootingDistance
+            && Vector3.Distance(agent.transform.position, player.position) > moveAwayDistance)
         {
             agent.transform.LookAt(player.position);
             Shoot();
             lastShotTime = Time.time; // Update the last shot time
+            Debug.Log("Start Shooting");
             return true;
-        } 
+        }
         else
         {
+            Debug.Log("Stop Shooting");
             return false;
         }
     }

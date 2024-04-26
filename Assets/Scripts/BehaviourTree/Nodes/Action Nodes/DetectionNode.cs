@@ -21,10 +21,10 @@ public class DetectionNode : IBaseNode
         float distanceToPlayer = Vector3.Distance(enemyAgent.transform.position, playerTransform.position);
         bool playerWithinDetectionRange = distanceToPlayer <= maxDetectionRange;
 
-        if (playerWithinDetectionRange) 
-            Debug.Log("Player within max range of " + maxDetectionRange);
-        else 
-            Debug.Log("Player outside range");
+        // if (playerWithinDetectionRange) 
+        //     Debug.Log("Player within max range of " + maxDetectionRange);
+        // else 
+        //     Debug.Log("Player outside range");
 
         return true;
     }

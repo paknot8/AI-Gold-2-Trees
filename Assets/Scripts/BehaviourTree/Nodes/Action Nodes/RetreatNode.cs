@@ -6,6 +6,8 @@ public class RetreatNode : IBaseNode
     private readonly NavMeshAgent agent;
     private readonly Transform player;
     private readonly float moveAwayDistance;
+    private float timeStuck = 0.0f;
+    private Vector3 lastStuckPosition;
 
     public RetreatNode(NavMeshAgent agent, Transform player, float moveAwayDistance)
     {
@@ -22,25 +24,35 @@ public class RetreatNode : IBaseNode
         // Check if player is within range
         if (agentToPlayerDistance <= moveAwayDistance)
         {
-            Debug.Log("Retreat");
             Vector3 targetPosition = CalculateTargetPositionAwayFromPlayer();
+
             if (IsTargetValidOnNavMesh(targetPosition))
             {
                 agent.SetDestination(targetPosition);
                 ResetWhenStuck();
-                return true;
             }
         }
-        return false;
+        return true;
     }
 
     private Vector3 CalculateTargetPositionAwayFromPlayer()
     {
-        agent.GetComponent<Renderer>().material.color = Color.yellow;
-        Vector3 moveDirection = agent.transform.position - player.position;
-        moveDirection.y = 0f;
-        moveDirection.Normalize();
-        return agent.transform.position + moveDirection * moveAwayDistance;
+    agent.GetComponent<Renderer>().material.color = Color.yellow;
+    Vector3 retreatDirection = agent.transform.forward * -1.0f; // Move backward relative to agent
+    retreatDirection.y = 0f;
+
+    // Generate a random offset within a specific range behind the agent
+    float randomOffset = Random.Range(-moveAwayDistance, 0.0f);
+    Vector3 targetPosition = agent.transform.position + retreatDirection * randomOffset;
+
+    // Check if the random position is valid on the NavMesh
+    if (NavMesh.SamplePosition(targetPosition, out NavMeshHit hit, 1.0f, NavMesh.AllAreas))
+    {
+        return hit.position;
+    }
+
+    // If not valid, return the agent's position (fallback)
+    return agent.transform.position;
     }
 
     private bool IsTargetValidOnNavMesh(Vector3 targetPosition)
@@ -50,6 +62,21 @@ public class RetreatNode : IBaseNode
 
     private void ResetWhenStuck()
     {
-        Vector3 previousPosition = agent.transform.position;
+    if (agent.transform.position == lastStuckPosition)
+    {
+        timeStuck += Time.deltaTime;
+        if (timeStuck > 1.0f) // Adjust threshold based on your needs
+        {
+        // Agent is stuck for more than 1 second, reset position or choose new direction
+        agent.Warp(agent.transform.position + Random.insideUnitSphere * 2.0f); // Randomly move the agent a bit
+        timeStuck = 0.0f;
+        lastStuckPosition = Vector3.zero;
+        }
+    }
+    else
+    {
+        timeStuck = 0.0f;
+        lastStuckPosition = agent.transform.position;
+    }
     }
 }

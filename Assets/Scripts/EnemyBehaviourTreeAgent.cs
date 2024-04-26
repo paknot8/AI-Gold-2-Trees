@@ -19,16 +19,31 @@ public class EnemyBehaviourTreeAgent : MonoBehaviour
     public float attackDistance = 15f;
     public float moveAwayDistance = 10f;
     
+    // Sequence node, executes child node, one after another. 
+    // if any child node returns false, the sequence node returns false itself
+    // and no further chuld nodes are evaluated (continued).
     private void CreateBehaviourTree()
     {
         List<IBaseNode> children = new()
         {
             new DetectionNode(agent,player,maxDetectionRange), // Just to initialize the max detectionDistance (always true)
             new PatrolNode(agent,waypoints,player),
-            new ChaseNode(agent,player,attackDistance),
-            new ShootNode(agent,player,bulletPrefab,attackDistance),
             new RetreatNode(agent,player,moveAwayDistance),
+            new ChaseNode(agent,player,attackDistance,moveAwayDistance),
+            new ShootNode(agent,player,bulletPrefab,attackDistance,moveAwayDistance),
         };
+
+        int currentNodeIndex = 0;
+        foreach (IBaseNode node in children)
+        {
+            if (!node.Update())
+            {
+            Debug.Log("Node " + currentNodeIndex + " (" + node.GetType().Name + ") returned false.");
+            break;
+            }
+            currentNodeIndex++;
+        }
+
         behaviourTree = new SequenceNode(children);
     }
 
