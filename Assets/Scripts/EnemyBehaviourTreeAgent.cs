@@ -11,8 +11,8 @@ public class EnemyBehaviourTreeAgent : MonoBehaviour
     public Transform player;
     public GameObject bulletPrefab;
     public List<Transform> waypoints;
-    
     [Header("Ranges")]
+    private readonly float pickupDetectionDistance;
     private readonly float attackDistance = 15f;
     private readonly float moveAwayDistance = 6f;
 
@@ -32,7 +32,7 @@ public class EnemyBehaviourTreeAgent : MonoBehaviour
     {
         List<IBaseNode> children = new()
         {
-            //new DetectionNode(agent,player,maxDetectionRange), // Just to initialize the max detectionDistance (always true)
+            new DetectionNode(agent,player,pickupDetectionDistance),
             new PatrolNode(agent,waypoints,player,attackDistance),
             new RetreatNode(agent,player,moveAwayDistance),
             new ChaseNode(agent,player,attackDistance,moveAwayDistance),

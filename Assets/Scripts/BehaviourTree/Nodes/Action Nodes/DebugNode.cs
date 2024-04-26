@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class DebugNode : IBaseNode
 {
-    private string destination;
+    private readonly string destination;
 
     public DebugNode(string destination) 
     {
