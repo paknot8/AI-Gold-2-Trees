@@ -4,17 +4,13 @@ using UnityEngine.AI;
 public class PickupNode : IBaseNode
 {
     private readonly NavMeshAgent agent;
-    private readonly Transform player;
     private readonly float pickupDetectionDistance;
-    private readonly float attackDistance;
     private readonly Item item; // Reference to the item GameObject
 
     public PickupNode(NavMeshAgent agent, Transform player, float pickupDetectionDistance, float attackDistance, Item item)
     {
         this.agent = agent;
-        this.player = player;
         this.pickupDetectionDistance = pickupDetectionDistance;
-        this.attackDistance = attackDistance;
         this.item = item;
     }
 
