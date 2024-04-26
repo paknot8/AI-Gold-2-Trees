@@ -30,6 +30,7 @@ public class ShootNode : IBaseNode
         && Vector3.Distance(enemyAgent.transform.position, playerTransform.position) <= shootingDistance)
         {
             enemyAgent.isStopped = true;
+            enemyAgent.transform.LookAt(playerTransform.position);
             Shoot();
             lastShotTime = Time.time; // Update the last shot time
             return true;
@@ -44,7 +45,10 @@ public class ShootNode : IBaseNode
     private void Shoot()
     {
         GameObject bullet = GameObject.Instantiate(bulletPrefab, enemyAgent.transform.position, Quaternion.identity);
+        // Calculate direction towards the player
         Vector3 direction = (playerTransform.position - enemyAgent.transform.position).normalized;
+        // Rotate the bullet to face the shooting direction
+        bullet.transform.rotation = Quaternion.LookRotation(direction);
         bullet.GetComponent<Rigidbody>().velocity = direction * bulletSpeed;
         GameObject.Destroy(bullet, bulletLifetime);
     }

@@ -13,7 +13,7 @@ public class EnemyBehaviourTreeAgent : MonoBehaviour
     public List<Transform> waypoints;
 
     [Header("Ranges")]
-    public float detectionDistance = 30f;
+    public float maxDetectionRange = 30f;
     public float bulletFireDistance = 12f;
     public float enemyToPlayerDistance = 7f;
 
@@ -22,12 +22,15 @@ public class EnemyBehaviourTreeAgent : MonoBehaviour
         // This is an AND gate.
         List<IBaseNode> children = new()
         {
-            new DetectionNode(enemyAgent,player,detectionDistance), // Just to initialize the max detectionDistance (always true)
+            new DetectionNode(enemyAgent,player,maxDetectionRange), // Just to initialize the max detectionDistance (always true)
             new DebugNode("Detecting Player"),
+
             new PatrolNode(enemyAgent, waypoints), // If this is false then go to next node
             new DebugNode("Moving to the Waypoint"),
+            
             new ShootNode(enemyAgent,player,bulletPrefab,bulletFireDistance),
             new DebugNode("Shoot a Bullet"),
+
             new MoveAwayNode(enemyAgent,player,enemyToPlayerDistance),
             new DebugNode("MoveAway"),
         };

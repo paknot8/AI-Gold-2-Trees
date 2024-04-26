@@ -12,7 +12,6 @@ public class Player : MonoBehaviour
         moveDirection = new(vector.x, 0f ,vector.y);
         transform.Translate(moveSpeed * Time.deltaTime * moveDirection, Space.World);
     }
-    //dd
 
     void OnMove(InputValue value) => vector = value.Get<Vector2>();
 }
