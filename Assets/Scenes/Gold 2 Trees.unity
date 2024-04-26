@@ -820,7 +820,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 1190216769}
   bulletPrefab: {fileID: 975213960720004372, guid: 198e208c5eacb9a46a9c503798b22486, type: 3}
-  item: {fileID: 4080587390235798641, guid: 0d1ea41f09ed0624385c24758bc329e0, type: 3}
+  item: {fileID: 974417007}
   waypoints:
   - {fileID: 53930447}
   - {fileID: 1456752761}
@@ -1882,6 +1882,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5388929994802819749, guid: 0d1ea41f09ed0624385c24758bc329e0, type: 3}
   m_PrefabInstance: {fileID: 8013338985897970672}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &974417007 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6739744263551480929, guid: 0d1ea41f09ed0624385c24758bc329e0, type: 3}
+  m_PrefabInstance: {fileID: 8013338985897970672}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: faa30129d0ff1e1458fa7eae8a8e68e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1028325104
 GameObject:
   m_ObjectHideFlags: 0

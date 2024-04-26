@@ -1,18 +1,17 @@
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class PickupNode : IBaseNode
 {
-    private readonly NavMeshAgent enemy;
+    private readonly NavMeshAgent agent;
     private readonly Transform player;
     private readonly float pickupDetectionDistance;
     private readonly float attackDistance;
-    private readonly GameObject item; // Reference to the item GameObject
+    private readonly Item item; // Reference to the item GameObject
 
-    public PickupNode(NavMeshAgent enemy, Transform player, float pickupDetectionDistance, float attackDistance, GameObject item)
+    public PickupNode(NavMeshAgent agent, Transform player, float pickupDetectionDistance, float attackDistance, Item item)
     {
-        this.enemy = enemy;
+        this.agent = agent;
         this.player = player;
         this.pickupDetectionDistance = pickupDetectionDistance;
         this.attackDistance = attackDistance;
@@ -25,21 +24,12 @@ public class PickupNode : IBaseNode
         if (item != null)
         {
             // Check if the item is within pickup detection distance
-            if (Vector3.Distance(enemy.transform.position, item.transform.position) < pickupDetectionDistance
-                && Vector3.Distance(enemy.transform.position, item.transform.position) > attackDistance)
+            if (Vector3.Distance(agent.transform.position, item.transform.position) <= pickupDetectionDistance)
             {
-                enemy.SetDestination(item.transform.position);
-                return true;
-            }
-            else
-            {
-                return false;
+                agent.SetDestination(item.transform.position);
+                agent.GetComponent<Renderer>().material.color = Color.red;
             }
         }
-        else
-        {
-            Debug.LogError("Item GameObject not found in the scene!");
-            return false;
-        }
+        return true;
     }
 }

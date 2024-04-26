@@ -10,23 +10,26 @@ public class EnemyBehaviourTreeAgent : MonoBehaviour
     private NavMeshAgent agent;
     public Transform player;
     public GameObject bulletPrefab;
-    public GameObject item;
+    public Item item;
     public List<Transform> waypoints;
 
     [Header("Ranges")]
-    private readonly float pickupDetectionDistance = 20;
+    private readonly float pickupDetectionDistance = 20f;
     private readonly float attackDistance = 15f;
     private readonly float moveAwayDistance = 6f;
 
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
-        item = gameObject;
         originalColor = GetComponent<Renderer>().material.color; // Save the original color
         CreateBehaviourTree();
     }
 
-    void Update() => behaviourTree?.Update();
+    void Update()
+    {
+        item = FindAnyObjectByType<Item>();
+        behaviourTree?.Update();
+    }
     
     // Sequence node, executes child node, one after another. 
     // if any child node returns false, the sequence node returns false itself
@@ -35,11 +38,11 @@ public class EnemyBehaviourTreeAgent : MonoBehaviour
     {
         List<IBaseNode> children = new()
         {
+            new PickupNode(agent,player,pickupDetectionDistance,attackDistance,item),
             new PatrolNode(agent,waypoints,player,attackDistance),
             new RetreatNode(agent,player,moveAwayDistance),
             new ChaseNode(agent,player,attackDistance,moveAwayDistance),
             new ShootNode(agent,player,bulletPrefab,attackDistance,moveAwayDistance),
-            new PickupNode(agent,player,pickupDetectionDistance,attackDistance,item),
         };
 
         StatementDebugger(children); // this is only used for testing
