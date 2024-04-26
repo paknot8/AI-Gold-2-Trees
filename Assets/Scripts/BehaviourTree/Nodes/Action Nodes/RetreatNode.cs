@@ -27,7 +27,8 @@ public class RetreatNode : IBaseNode
             Vector3 targetPosition = CalculateTargetPositionAwayFromPlayer();
             if (IsTargetValidOnNavMesh(targetPosition))
             {
-                agent.GetComponent<Renderer>().material.color = Color.magenta;
+                // Reset color to original if not within range
+                agent.GetComponent<Renderer>().material.color = Color.yellow; // Set back to original color
                 agent.SetDestination(targetPosition);
                 ResetStuckTimer();
                 return true;

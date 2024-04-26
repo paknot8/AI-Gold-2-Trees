@@ -22,9 +22,6 @@ public class PatrolNode : IBaseNode
             return false;
         }
 
-    
-
-        agent.GetComponent<Renderer>().material.color = Color.blue;
         MoveToWaypoint();
         return true;
     }
@@ -37,11 +34,21 @@ public class PatrolNode : IBaseNode
             return;
         }
 
+        Vector3 waypointPosition = waypoints[currentWaypointIndex].position;        
+        Vector3 directionToWaypoint = (waypointPosition - agent.transform.position).normalized; // Calculate the direction towards the current waypoint
+        Vector3 agentMovementDirection = agent.velocity.normalized; // Calculate the agent's movement direction 
+        float compareDirection = Vector3.Dot(agentMovementDirection, directionToWaypoint); // Check if the agent is moving towards the waypoint by comparing directions
+
         // Check if we have reached the current waypoint
         // Move to the next waypoint
         if (agent.remainingDistance < 0.5f)
         {
             SetDestinationToNextWaypoint();
+        }
+
+        if (compareDirection > 0)
+        {
+            agent.GetComponent<Renderer>().material.color = Color.blue; // Agent is moving towards the waypoint
         }
     }
 
