@@ -4,17 +4,29 @@ using System.Collections.Generic;
 
 public class PatrolNode : IBaseNode
 {
-    private readonly NavMeshAgent enemyAgent;
+    private readonly NavMeshAgent agent;
     private readonly List<Transform> waypoints;
     private int currentWaypointIndex = 0;
 
-    public PatrolNode(NavMeshAgent agent, List<Transform> patrolWaypoints)
+    public PatrolNode(NavMeshAgent agent, List<Transform> waypoints)
     {
-        enemyAgent = agent;
-        waypoints = patrolWaypoints;
+        this.agent = agent;
+        this.waypoints = waypoints;
+    }
 
-        // Start patrolling towards the first waypoint
-        SetDestinationToNextWaypoint();
+    public virtual bool Update()
+    {
+        if (waypoints == null)
+        {
+            Debug.LogError("Waypoints are not assigned!");
+            return false;
+        }
+
+    
+
+        agent.GetComponent<Renderer>().material.color = Color.blue;
+        MoveToWaypoint();
+        return true;
     }
 
     public void MoveToWaypoint()
@@ -27,7 +39,7 @@ public class PatrolNode : IBaseNode
 
         // Check if we have reached the current waypoint
         // Move to the next waypoint
-        if (enemyAgent.remainingDistance < 0.5f)
+        if (agent.remainingDistance < 0.5f)
         {
             SetDestinationToNextWaypoint();
         }
@@ -36,20 +48,6 @@ public class PatrolNode : IBaseNode
     private void SetDestinationToNextWaypoint()
     {
         currentWaypointIndex = (currentWaypointIndex + 1) % waypoints.Count; // Update the current waypoint index
-        enemyAgent.SetDestination(waypoints[currentWaypointIndex].position); // Set the destination to the next waypoint
-    }
-
-    public virtual bool Update()
-    {
-        if (waypoints == null)
-        {
-            Debug.LogError("Waypoints are not assigned!");
-            return false;
-        }
-        else
-        {
-            MoveToWaypoint();
-            return true;
-        }
+        agent.SetDestination(waypoints[currentWaypointIndex].position); // Set the destination to the next waypoint
     }
 }

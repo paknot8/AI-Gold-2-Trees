@@ -722,7 +722,7 @@ MonoBehaviour:
   - {fileID: 721724585}
   maxDetectionRange: 20
   bulletFireDistance: 12
-  enemyToPlayerDistance: 7
+  moveAwayDistance: 5
 --- !u!1 &316719987
 GameObject:
   m_ObjectHideFlags: 0

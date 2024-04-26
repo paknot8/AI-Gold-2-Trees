@@ -11,21 +11,25 @@ public class EnemyBehaviourTreeAgent : MonoBehaviour
     public Transform player;
     public GameObject bulletPrefab;
     public List<Transform> waypoints;
+    private Color originalColor; // Variable to store the original color
 
     [Header("Ranges")]
     public float maxDetectionRange = 20f;
     public float bulletFireDistance = 15f;
     public float moveAwayDistance = 5f;
 
+    public static bool isPatrolling = false;
+
     private void CreateBehaviourTree()
     {
-        // This is an AND gate.
+        // This is an AND gate
+        // If a child is false it will not execute
         List<IBaseNode> children = new()
         {
             new DetectionNode(enemyAgent,player,maxDetectionRange), // Just to initialize the max detectionDistance (always true)
             
-            new PatrolNode(enemyAgent, waypoints), // If this is false then go to next node
-            
+            new PatrolNode(enemyAgent,waypoints),
+
             new ShootNode(enemyAgent,player,bulletPrefab,bulletFireDistance),
             new DebugNode("Shoot a Bullet"),
 
@@ -38,6 +42,7 @@ public class EnemyBehaviourTreeAgent : MonoBehaviour
     void Start()
     {
         enemyAgent = GetComponent<NavMeshAgent>();
+        originalColor = GetComponent<Renderer>().material.color; // Save the original color
         CreateBehaviourTree();
     }
 
@@ -60,5 +65,11 @@ public class EnemyBehaviourTreeAgent : MonoBehaviour
             Gizmos.color = Color.blue;
             Gizmos.DrawWireSphere(enemyAgent.transform.position, moveAwayDistance);
         }
+    }
+
+    // Restore original color when needed
+    public void RestoreOriginalColor()
+    {
+        GetComponent<Renderer>().material.color = originalColor;
     }
 }

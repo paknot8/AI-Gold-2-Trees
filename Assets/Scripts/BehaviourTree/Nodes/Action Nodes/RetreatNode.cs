@@ -3,23 +3,23 @@ using UnityEngine.AI;
 
 public class RetreatNode : IBaseNode
 {
-    private readonly NavMeshAgent enemyAgent;
+    private readonly NavMeshAgent agent;
     private readonly Transform player;
     private readonly float moveAwayDistance;
     private float timeToConsiderStuck = 3f; // Time to consider agent stuck
     private Vector3 previousPosition;
 
-    public RetreatNode(NavMeshAgent enemyAgent, Transform playerTransform, float moveAwayDistance)
+    public RetreatNode(NavMeshAgent agent, Transform player, float moveAwayDistance)
     {
-        this.enemyAgent = enemyAgent;
-        player = playerTransform;
+        this.agent = agent;
+        this.player = player;
         this.moveAwayDistance = moveAwayDistance;
     }
 
     public virtual bool Update()
     {
         // Calculate range from stopping distance
-        float rangeFromStoppingDistance = enemyAgent.stoppingDistance + moveAwayDistance;
+        float rangeFromStoppingDistance = agent.stoppingDistance + moveAwayDistance;
 
         // Check if player is within range
         if (IsPlayerWithinRange(rangeFromStoppingDistance))
@@ -27,7 +27,8 @@ public class RetreatNode : IBaseNode
             Vector3 targetPosition = CalculateTargetPositionAwayFromPlayer();
             if (IsTargetValidOnNavMesh(targetPosition))
             {
-                enemyAgent.SetDestination(targetPosition);
+                agent.GetComponent<Renderer>().material.color = Color.magenta;
+                agent.SetDestination(targetPosition);
                 ResetStuckTimer();
                 return true;
             }
@@ -45,15 +46,15 @@ public class RetreatNode : IBaseNode
 
     private bool IsPlayerWithinRange(float range)
     {
-        return Vector3.Distance(enemyAgent.transform.position, player.position) <= range;
+        return Vector3.Distance(agent.transform.position, player.position) <= range;
     }
 
     private Vector3 CalculateTargetPositionAwayFromPlayer()
     {
-        Vector3 moveDirection = enemyAgent.transform.position - player.position;
+        Vector3 moveDirection = agent.transform.position - player.position;
         moveDirection.y = 0f;
         moveDirection.Normalize();
-        return enemyAgent.transform.position + moveDirection * moveAwayDistance;
+        return agent.transform.position + moveDirection * moveAwayDistance;
     }
 
     private bool IsTargetValidOnNavMesh(Vector3 targetPosition)
@@ -63,13 +64,13 @@ public class RetreatNode : IBaseNode
 
     private void ResetStuckTimer()
     {
-        previousPosition = enemyAgent.transform.position;
+        previousPosition = agent.transform.position;
         timeToConsiderStuck = 3f;
     }
 
     private bool IsAgentStuck()
     {
-        float distance = Vector3.Distance(enemyAgent.transform.position, previousPosition);
+        float distance = Vector3.Distance(agent.transform.position, previousPosition);
         timeToConsiderStuck -= Time.deltaTime;
         return (distance < 0.1f && timeToConsiderStuck <= 0);
     }
