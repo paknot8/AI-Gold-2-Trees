@@ -14,8 +14,8 @@ public class EnemyBehaviourTreeAgent : MonoBehaviour
 
     [Header("Ranges")]
     public float maxDetectionRange = 20f;
-    public float bulletFireDistance = 12f;
-    public float enemyToPlayerDistance = 5f;
+    public float bulletFireDistance = 15f;
+    public float moveAwayDistance = 5f;
 
     private void CreateBehaviourTree()
     {
@@ -23,15 +23,15 @@ public class EnemyBehaviourTreeAgent : MonoBehaviour
         List<IBaseNode> children = new()
         {
             new DetectionNode(enemyAgent,player,maxDetectionRange), // Just to initialize the max detectionDistance (always true)
-            new DebugNode("Detecting Player"),
+            //new DebugNode("Detecting Player"),
 
             new PatrolNode(enemyAgent, waypoints), // If this is false then go to next node
-            new DebugNode("Moving to the Waypoint"),
+            //new DebugNode("Moving to the Waypoint"),
             
             new ShootNode(enemyAgent,player,bulletPrefab,bulletFireDistance),
             new DebugNode("Shoot a Bullet"),
 
-            new MoveAwayNode(enemyAgent,player,enemyToPlayerDistance),
+            new MoveAwayNode(enemyAgent,player,moveAwayDistance),
             new DebugNode("MoveAway"),
         };
         behaviourTree = new SequenceNode(children);
@@ -60,7 +60,7 @@ public class EnemyBehaviourTreeAgent : MonoBehaviour
             Gizmos.DrawWireSphere(enemyAgent.transform.position, bulletFireDistance);
 
             Gizmos.color = Color.blue;
-            Gizmos.DrawWireSphere(enemyAgent.transform.position, enemyToPlayerDistance);
+            Gizmos.DrawWireSphere(enemyAgent.transform.position, moveAwayDistance);
         }
     }
 }

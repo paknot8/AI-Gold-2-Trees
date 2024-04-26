@@ -4,8 +4,8 @@ using System.Collections.Generic;
 
 public class PatrolNode : IBaseNode
 {
-    private NavMeshAgent enemyAgent;
-    private List<Transform> waypoints;
+    private readonly NavMeshAgent enemyAgent;
+    private readonly List<Transform> waypoints;
     private int currentWaypointIndex = 0;
 
     public PatrolNode(NavMeshAgent agent, List<Transform> patrolWaypoints)

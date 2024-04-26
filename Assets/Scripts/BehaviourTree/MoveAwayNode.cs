@@ -3,9 +3,9 @@ using UnityEngine.AI;
 
 public class MoveAwayNode : IBaseNode
 {
-    private NavMeshAgent enemyAgent;
-    private Transform player;
-    private float moveAwayDistance;
+    private readonly NavMeshAgent enemyAgent;
+    private readonly Transform player;
+    private readonly float moveAwayDistance;
     private float timeToConsiderStuck = 3f; // Time to consider agent stuck
     private Vector3 previousPosition;
 

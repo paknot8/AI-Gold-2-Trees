@@ -5,9 +5,9 @@ using UnityEngine.AI;
 
 public class ShootNode : IBaseNode
 {
-    private NavMeshAgent enemyAgent;
-    private Transform playerTransform;
-    private GameObject bulletPrefab;
+    private readonly NavMeshAgent enemyAgent;
+    private readonly Transform playerTransform;
+    private readonly GameObject bulletPrefab;
 
     private readonly float shootInterval = 1f;
     private readonly float bulletSpeed = 10f;
