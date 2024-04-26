@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -7,6 +8,7 @@ public class ChaseNode : IBaseNode
     private readonly Transform player;
     private readonly float attackDistance;
     private readonly float moveAwayDistance;
+    private Vector3 lastPlayerPosition; // Store the player's position before resetting the path
 
     public ChaseNode(NavMeshAgent agent, Transform player, float attackDistance, float moveAwayDistance)
     {
@@ -21,13 +23,14 @@ public class ChaseNode : IBaseNode
         if (Vector3.Distance(agent.transform.position, player.position) < attackDistance
             && Vector3.Distance(agent.transform.position, player.position) > moveAwayDistance)
         {
-            agent.SetDestination(player.position);
+            lastPlayerPosition = player.position; // Store the player's position
+            agent.SetDestination(lastPlayerPosition);
             agent.GetComponent<Renderer>().material.color = Color.red;
             return true;
         }
         else
         {
             return false;
-        }
+        } 
     }
 }
