@@ -39,7 +39,7 @@ public class EnemyBehaviourTreeAgent : MonoBehaviour
         List<IBaseNode> children = new()
         {
             new PickupNode(agent,player,pickupDetectionDistance,attackDistance,item),
-            new PatrolNode(agent,waypoints,player,attackDistance),
+            new PatrolNode(agent,waypoints,player,attackDistance,pickupDetectionDistance,item),
             new RetreatNode(agent,player,moveAwayDistance),
             new ChaseNode(agent,player,attackDistance,moveAwayDistance),
             new ShootNode(agent,player,bulletPrefab,attackDistance,moveAwayDistance),
