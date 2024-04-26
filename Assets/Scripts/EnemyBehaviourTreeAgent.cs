@@ -13,9 +13,9 @@ public class EnemyBehaviourTreeAgent : MonoBehaviour
     public List<Transform> waypoints;
 
     [Header("Ranges")]
-    public float maxDetectionRange = 30f;
+    public float maxDetectionRange = 20f;
     public float bulletFireDistance = 12f;
-    public float enemyToPlayerDistance = 7f;
+    public float enemyToPlayerDistance = 5f;
 
     private void CreateBehaviourTree()
     {
@@ -46,5 +46,21 @@ public class EnemyBehaviourTreeAgent : MonoBehaviour
     void Update()
     {
         behaviourTree?.Update();
+    }
+
+    // Draw Gizmos to visualize the detection range
+    void OnDrawGizmosSelected()
+    {
+        if (enemyAgent != null)
+        {
+            Gizmos.color = Color.white;
+            Gizmos.DrawWireSphere(enemyAgent.transform.position, maxDetectionRange);
+
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(enemyAgent.transform.position, bulletFireDistance);
+
+            Gizmos.color = Color.blue;
+            Gizmos.DrawWireSphere(enemyAgent.transform.position, enemyToPlayerDistance);
+        }
     }
 }
