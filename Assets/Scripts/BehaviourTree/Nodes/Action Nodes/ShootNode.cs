@@ -43,10 +43,8 @@ public class ShootNode : IBaseNode
     private void Shoot()
     {
         GameObject bullet = GameObject.Instantiate(bulletPrefab, enemyAgent.transform.position, Quaternion.identity);
-        // Calculate direction towards the player
-        Vector3 direction = (playerTransform.position - enemyAgent.transform.position).normalized;
-        // Rotate the bullet to face the shooting direction
-        bullet.transform.rotation = Quaternion.LookRotation(direction);
+        Vector3 direction = (playerTransform.position - enemyAgent.transform.position).normalized; // Calculate direction towards the player
+        bullet.transform.rotation = Quaternion.LookRotation(direction); // Rotate the bullet to face the shooting direction
         bullet.GetComponent<Rigidbody>().velocity = direction * bulletSpeed;
         GameObject.Destroy(bullet, bulletLifetime);
     }

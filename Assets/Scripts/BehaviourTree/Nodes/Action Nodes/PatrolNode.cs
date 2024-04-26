@@ -5,13 +5,17 @@ using System.Collections.Generic;
 public class PatrolNode : IBaseNode
 {
     private readonly NavMeshAgent agent;
+    private readonly Transform player;
     private readonly List<Transform> waypoints;
     private int currentWaypointIndex = 0;
+    private readonly float moveAwayDistance;
 
-    public PatrolNode(NavMeshAgent agent, List<Transform> waypoints)
+    public PatrolNode(NavMeshAgent agent, List<Transform> waypoints,Transform player,float moveAwayDistance)
     {
         this.agent = agent;
         this.waypoints = waypoints;
+        this.player = player;
+        this.moveAwayDistance = moveAwayDistance;
     }
 
     public virtual bool Update()
@@ -22,9 +26,26 @@ public class PatrolNode : IBaseNode
             return false;
         }
 
-        MoveToWaypoint();
-        return true;
+        // Check if the player is outside moveAwayDistance
+        if (IsPlayerWithinMoveAwayDistance())
+        {   
+            Debug.Log(true);
+            return true;
+        }
+        else
+        {
+            Debug.Log(false);
+            MoveToWaypoint();
+            return false;
+        }
     }
+
+    private bool IsPlayerWithinMoveAwayDistance()
+    {
+        float distanceToPlayer = Vector3.Distance(agent.transform.position, player.position);
+        return distanceToPlayer <= moveAwayDistance;
+    }
+
 
     public void MoveToWaypoint()
     {

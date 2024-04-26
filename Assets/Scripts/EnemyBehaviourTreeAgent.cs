@@ -18,8 +18,6 @@ public class EnemyBehaviourTreeAgent : MonoBehaviour
     public float bulletFireDistance = 15f;
     public float moveAwayDistance = 5f;
 
-    public static bool isPatrolling = false;
-
     private void CreateBehaviourTree()
     {
         // This is an AND gate
@@ -28,7 +26,7 @@ public class EnemyBehaviourTreeAgent : MonoBehaviour
         {
             new DetectionNode(enemyAgent,player,maxDetectionRange), // Just to initialize the max detectionDistance (always true)
             
-            new PatrolNode(enemyAgent,waypoints),
+            new PatrolNode(enemyAgent,waypoints,player,moveAwayDistance),
 
             new ShootNode(enemyAgent,player,bulletPrefab,bulletFireDistance),
             new DebugNode("Shoot a Bullet"),
