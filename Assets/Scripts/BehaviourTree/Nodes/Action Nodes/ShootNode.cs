@@ -3,8 +3,8 @@ using UnityEngine.AI;
 
 public class ShootNode : IBaseNode
 {
-    private readonly NavMeshAgent enemyAgent;
-    private readonly Transform playerTransform;
+    private readonly NavMeshAgent agent;
+    private readonly Transform player;
     private readonly GameObject bulletPrefab;
 
     private readonly float shootInterval = 1f;
@@ -15,8 +15,8 @@ public class ShootNode : IBaseNode
 
     public ShootNode(NavMeshAgent enemyAgent, Transform playerTransform, GameObject bulletPrefab, float shootingDistance)
     {
-        this.enemyAgent = enemyAgent;
-        this.playerTransform = playerTransform;
+        this.agent = enemyAgent;
+        this.player = playerTransform;
         this.bulletPrefab = bulletPrefab;
         this.shootingDistance = shootingDistance;
     }
@@ -25,25 +25,25 @@ public class ShootNode : IBaseNode
     {       
         // Check if player is within shooting distance and shoot interval is reached
         if (Time.time >= lastShotTime + shootInterval 
-        && Vector3.Distance(enemyAgent.transform.position, playerTransform.position) <= shootingDistance)
+        && Vector3.Distance(agent.transform.position, player.position) <= shootingDistance)
         {
-            enemyAgent.isStopped = true;
-            enemyAgent.transform.LookAt(playerTransform.position);
+            agent.isStopped = true;
+            agent.transform.LookAt(player.position);
             Shoot();
             lastShotTime = Time.time; // Update the last shot time
             return true;
         } 
         else
         {
-            enemyAgent.isStopped = false;
+            agent.isStopped = false;
             return false;
         }
     }
 
     private void Shoot()
     {
-        GameObject bullet = GameObject.Instantiate(bulletPrefab, enemyAgent.transform.position, Quaternion.identity);
-        Vector3 direction = (playerTransform.position - enemyAgent.transform.position).normalized; // Calculate direction towards the player
+        GameObject bullet = GameObject.Instantiate(bulletPrefab, agent.transform.position, Quaternion.identity);
+        Vector3 direction = (player.position - agent.transform.position).normalized; // Calculate direction towards the player
         bullet.transform.rotation = Quaternion.LookRotation(direction); // Rotate the bullet to face the shooting direction
         bullet.GetComponent<Rigidbody>().velocity = direction * bulletSpeed;
         GameObject.Destroy(bullet, bulletLifetime);

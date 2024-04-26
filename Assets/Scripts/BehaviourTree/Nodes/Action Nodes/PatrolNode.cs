@@ -8,14 +8,12 @@ public class PatrolNode : IBaseNode
     private readonly Transform player;
     private readonly List<Transform> waypoints;
     private int currentWaypointIndex = 0;
-    private readonly float distanceFromPlayer;
 
-    public PatrolNode(NavMeshAgent agent, List<Transform> waypoints,Transform player,float distanceFromPlayer)
+    public PatrolNode(NavMeshAgent agent, List<Transform> waypoints, Transform player)
     {
         this.agent = agent;
         this.waypoints = waypoints;
         this.player = player;
-        this.distanceFromPlayer = distanceFromPlayer;
     }
 
     public virtual bool Update()
@@ -25,25 +23,8 @@ public class PatrolNode : IBaseNode
             Debug.LogError("Waypoints are not assigned!");
             return false;
         }
-
-        // Check if the player is outside moveAwayDistance
-        if (PlayerWithinDistance())
-        {   
-            agent.isStopped = false;
-            MoveToWaypoint();
-            return true;
-        }
-        else
-        {
-            agent.isStopped = true;
-            return false;
-        }
-    }
-
-    private bool PlayerWithinDistance()
-    {
-        float distanceToPlayer = Vector3.Distance(agent.transform.position, player.position);
-        return distanceToPlayer >= distanceFromPlayer;
+        MoveToWaypoint();
+        return true;
     }
 
     public void MoveToWaypoint()

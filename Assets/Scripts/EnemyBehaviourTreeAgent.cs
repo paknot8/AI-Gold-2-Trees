@@ -7,7 +7,7 @@ public class EnemyBehaviourTreeAgent : MonoBehaviour
 {
     private IBaseNode behaviourTree = null;
 
-    private NavMeshAgent enemyAgent;
+    private NavMeshAgent agent;
     public Transform player;
     public GameObject bulletPrefab;
     public List<Transform> waypoints;
@@ -16,29 +16,26 @@ public class EnemyBehaviourTreeAgent : MonoBehaviour
 
     [Header("Ranges")]
     public float maxDetectionRange = 20f;
-    public float bulletFireDistance = 15f;
-    public float moveAwayDistance = 5f;
-
+    public float attackDistance = 15f;
+    public float moveAwayDistance = 10f;
+    
     private void CreateBehaviourTree()
     {
         List<IBaseNode> children = new()
         {
-            new DetectionNode(enemyAgent,player,maxDetectionRange), // Just to initialize the max detectionDistance (always true)
+            new DetectionNode(agent,player,maxDetectionRange), // Just to initialize the max detectionDistance (always true)
+            new PatrolNode(agent,waypoints,player),
+            new ChaseNode(agent,player,attackDistance,moveAwayDistance),
+            new RetreatNode(agent,player,moveAwayDistance),
+            new ShootNode(agent,player,bulletPrefab,attackDistance),
             
-            new PatrolNode(enemyAgent,waypoints,player,moveAwayDistance),
-
-            new ShootNode(enemyAgent,player,bulletPrefab,bulletFireDistance),
-            new DebugNode("Shoot a Bullet"),
-
-            new RetreatNode(enemyAgent,player,moveAwayDistance),
-            new DebugNode("MoveAway"),
         };
         behaviourTree = new SequenceNode(children);
     }
 
     void Start()
     {
-        enemyAgent = GetComponent<NavMeshAgent>();
+        agent = GetComponent<NavMeshAgent>();
         originalColor = GetComponent<Renderer>().material.color; // Save the original color
         CreateBehaviourTree();
     }
@@ -51,16 +48,16 @@ public class EnemyBehaviourTreeAgent : MonoBehaviour
     // Draw Gizmos to visualize the detection range
     void OnDrawGizmosSelected()
     {
-        if (enemyAgent != null)
+        if (agent != null)
         {
             Gizmos.color = Color.white;
-            Gizmos.DrawWireSphere(enemyAgent.transform.position, maxDetectionRange);
+            Gizmos.DrawWireSphere(agent.transform.position, maxDetectionRange);
 
             Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(enemyAgent.transform.position, bulletFireDistance);
+            Gizmos.DrawWireSphere(agent.transform.position, attackDistance);
 
-            Gizmos.color = Color.blue;
-            Gizmos.DrawWireSphere(enemyAgent.transform.position, moveAwayDistance);
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawWireSphere(agent.transform.position, moveAwayDistance);
         }
     }
 
