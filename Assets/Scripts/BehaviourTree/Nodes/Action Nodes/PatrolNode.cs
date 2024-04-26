@@ -46,7 +46,6 @@ public class PatrolNode : IBaseNode
         return distanceToPlayer <= moveAwayDistance;
     }
 
-
     public void MoveToWaypoint()
     {
         if (waypoints.Count == 0)

@@ -738,7 +738,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: da1c8ee79ff7a4841a2c45e59e662b5d, type: 2}
+  - {fileID: 2100000, guid: c456e86b768d6db438a0f2bb35d695f9, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -826,7 +826,7 @@ MonoBehaviour:
   - {fileID: 50673872}
   - {fileID: 721724585}
   maxDetectionRange: 20
-  bulletFireDistance: 12
+  bulletFireDistance: 15
   moveAwayDistance: 5
 --- !u!1 &316719987
 GameObject:
