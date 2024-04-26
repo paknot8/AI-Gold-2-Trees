@@ -23,7 +23,7 @@ public class EnemyBehaviourTreeAgent : MonoBehaviour
         List<IBaseNode> children = new()
         {
             new DetectionNode(enemyAgent,player,maxDetectionRange), // Just to initialize the max detectionDistance (always true)
-
+            
             new PatrolNode(enemyAgent, waypoints), // If this is false then go to next node
             
             new ShootNode(enemyAgent,player,bulletPrefab,bulletFireDistance),
