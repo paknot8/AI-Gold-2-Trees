@@ -37,22 +37,20 @@ public class RetreatNode : IBaseNode
 
     private Vector3 CalculateTargetPositionAwayFromPlayer()
     {
-    agent.GetComponent<Renderer>().material.color = Color.yellow;
-    Vector3 retreatDirection = agent.transform.forward * -1.0f; // Move backward relative to agent
-    retreatDirection.y = 0f;
+        agent.GetComponent<Renderer>().material.color = Color.yellow;
 
-    // Generate a random offset within a specific range behind the agent
-    float randomOffset = Random.Range(-moveAwayDistance, 0.0f);
-    Vector3 targetPosition = agent.transform.position + retreatDirection * randomOffset;
+        Vector3 retreatDirection = (agent.transform.position - player.position).normalized; // Move away from the player
+        retreatDirection.y = 0f;
 
-    // Check if the random position is valid on the NavMesh
-    if (NavMesh.SamplePosition(targetPosition, out NavMeshHit hit, 1.0f, NavMesh.AllAreas))
-    {
-        return hit.position;
-    }
+        Vector3 targetPosition = agent.transform.position + retreatDirection * 3f; // Move 3 units away from the player
 
-    // If not valid, return the agent's position (fallback)
-    return agent.transform.position;
+        if (NavMesh.SamplePosition(targetPosition, out NavMeshHit hit, 1.0f, NavMesh.AllAreas))
+        {
+            return hit.position;
+        }
+
+        // If not valid, return the agent's position (fallback)
+        return agent.transform.position;
     }
 
     private bool IsTargetValidOnNavMesh(Vector3 targetPosition)
@@ -62,21 +60,21 @@ public class RetreatNode : IBaseNode
 
     private void ResetWhenStuck()
     {
-    if (agent.transform.position == lastStuckPosition)
-    {
-        timeStuck += Time.deltaTime;
-        if (timeStuck > 1.0f) // Adjust threshold based on your needs
+        if (agent.transform.position == lastStuckPosition)
         {
-        // Agent is stuck for more than 1 second, reset position or choose new direction
-        agent.Warp(agent.transform.position + Random.insideUnitSphere * 2.0f); // Randomly move the agent a bit
-        timeStuck = 0.0f;
-        lastStuckPosition = Vector3.zero;
+            timeStuck += Time.deltaTime;
+            if (timeStuck > 1.0f) // Adjust threshold based on your needs
+            {
+                // Agent is stuck for more than 1 second, reset position or choose new direction
+                agent.Warp(agent.transform.position + Random.insideUnitSphere * 2.0f); // Randomly move the agent a bit
+                timeStuck = 0.0f;
+                lastStuckPosition = Vector3.zero;
+            }
         }
-    }
-    else
-    {
-        timeStuck = 0.0f;
-        lastStuckPosition = agent.transform.position;
-    }
+        else
+        {
+            timeStuck = 0.0f;
+            lastStuckPosition = agent.transform.position;
+        }
     }
 }
