@@ -8,14 +8,14 @@ public class PatrolNode : IBaseNode
     private readonly Transform player;
     private readonly List<Transform> waypoints;
     private int currentWaypointIndex = 0;
-    private readonly float moveAwayDistance;
+    private readonly float distanceFromPlayer;
 
-    public PatrolNode(NavMeshAgent agent, List<Transform> waypoints,Transform player,float moveAwayDistance)
+    public PatrolNode(NavMeshAgent agent, List<Transform> waypoints,Transform player,float distanceFromPlayer)
     {
         this.agent = agent;
         this.waypoints = waypoints;
         this.player = player;
-        this.moveAwayDistance = moveAwayDistance;
+        this.distanceFromPlayer = distanceFromPlayer;
     }
 
     public virtual bool Update()
@@ -27,23 +27,23 @@ public class PatrolNode : IBaseNode
         }
 
         // Check if the player is outside moveAwayDistance
-        if (IsPlayerWithinMoveAwayDistance())
+        if (PlayerWithinDistance())
         {   
-            Debug.Log(true);
+            agent.isStopped = false;
+            MoveToWaypoint();
             return true;
         }
         else
         {
-            Debug.Log(false);
-            MoveToWaypoint();
+            agent.isStopped = true;
             return false;
         }
     }
 
-    private bool IsPlayerWithinMoveAwayDistance()
+    private bool PlayerWithinDistance()
     {
         float distanceToPlayer = Vector3.Distance(agent.transform.position, player.position);
-        return distanceToPlayer <= moveAwayDistance;
+        return distanceToPlayer >= distanceFromPlayer;
     }
 
     public void MoveToWaypoint()
@@ -66,9 +66,10 @@ public class PatrolNode : IBaseNode
             SetDestinationToNextWaypoint();
         }
 
+        // Agent is moving towards the waypoint
         if (compareDirection > 0)
         {
-            agent.GetComponent<Renderer>().material.color = Color.blue; // Agent is moving towards the waypoint
+            agent.GetComponent<Renderer>().material.color = Color.blue;
         }
     }
 
