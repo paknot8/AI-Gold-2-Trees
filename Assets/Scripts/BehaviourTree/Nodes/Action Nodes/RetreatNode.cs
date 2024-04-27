@@ -18,22 +18,27 @@ public class RetreatNode : IBaseNode
 
     public virtual bool Update()
     {
-        // Calculate range from stopping distance
-        float agentToPlayerDistance = Vector3.Distance(agent.transform.position, player.position);
-
-        // Check if player is within range
-        if (agentToPlayerDistance <= moveAwayDistance)
+        if (agent != null && player != null)
         {
-            Vector3 targetPosition = CalculateTargetPositionAwayFromPlayer();
+            // Calculate range from stopping distance
+            float agentToPlayerDistance = Vector3.Distance(agent.transform.position, player.position);
 
-            if (IsTargetValidOnNavMesh(targetPosition))
+            // Check if player is within range
+            if (agentToPlayerDistance <= moveAwayDistance)
             {
-                agent.SetDestination(targetPosition);
-                ResetWhenStuck();
+                Vector3 targetPosition = CalculateTargetPositionAwayFromPlayer();
+
+                if (IsTargetValidOnNavMesh(targetPosition))
+                {
+                    agent.SetDestination(targetPosition);
+                    ResetWhenStuck();
+                }
             }
+            return true;
         }
-        return true;
+        return false;
     }
+        
 
     private Vector3 CalculateTargetPositionAwayFromPlayer()
     {
