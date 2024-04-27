@@ -25,7 +25,8 @@ public class PickupNode : IBaseNode
                 agent.SetDestination(item.transform.position);
                 agent.GetComponent<Renderer>().material.color = Color.green;
             }
+            return true;
         }
-        return true;
+        return false;
     }
 }

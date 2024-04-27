@@ -23,7 +23,6 @@ public class Item : MonoBehaviour
         {
             // Respawn the item randomly on the floor
             RespawnItem();
-            Destroy(gameObject); // Destroy the item
         }
     }
 
@@ -48,7 +47,7 @@ public class Item : MonoBehaviour
         float randomZ = Random.Range(minZ, maxZ);
         Vector3 respawnPosition = new Vector3(randomX, transform.position.y, randomZ);
 
-        // Respawn the item at the random position
-        Instantiate(gameObject, respawnPosition, Quaternion.identity);
+        // Move the item to the random position
+        transform.position = respawnPosition;
     }
 }
