@@ -1,7 +1,7 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using TMPro;
 
 public class EnemyBehaviourTreeAgent : MonoBehaviour
 {
@@ -12,6 +12,7 @@ public class EnemyBehaviourTreeAgent : MonoBehaviour
     public GameObject bulletPrefab;
     public Item item;
     public List<Transform> waypoints;
+    public TextMeshProUGUI text;
 
     [Header("Ranges")]
     private readonly float pickupDetectionDistance = 20f;
@@ -27,6 +28,7 @@ public class EnemyBehaviourTreeAgent : MonoBehaviour
 
     void Update()
     {
+        // text.text += "Hoi";
         item = FindAnyObjectByType<Item>();
         behaviourTree?.Update();
     }
@@ -41,6 +43,7 @@ public class EnemyBehaviourTreeAgent : MonoBehaviour
             new PickupNode(agent,pickupDetectionDistance,item),
             new PatrolNode(agent,waypoints,player,attackDistance,pickupDetectionDistance,item),
             new RetreatNode(agent,player,moveAwayDistance),
+            new EnemyTalkNode("Aaah! Don't come closer!",agent,player,text,moveAwayDistance,attackDistance),
             new ChaseNode(agent,player,attackDistance,moveAwayDistance),
             new ShootNode(agent,player,bulletPrefab,attackDistance,moveAwayDistance),
         };
