@@ -37,7 +37,7 @@ public class EnemyTalkNode : IBaseNode
             }
             else if (Vector3.Distance(player.transform.position, agent.transform.position) > attackDistance)
             {
-                text.text = ("...");
+                text.text = ("Time to Patrol...");
             }
             return true;
         }

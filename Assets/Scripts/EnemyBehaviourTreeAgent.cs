@@ -40,7 +40,7 @@ public class EnemyBehaviourTreeAgent : MonoBehaviour
         List<IBaseNode> children = new()
         {
             new EnemyTalkNode("Aaah! Don't come closer!",agent,player,text,moveAwayDistance,attackDistance),
-            new PickupNode(agent,pickupDetectionDistance,item),
+            new PickupNode(agent,pickupDetectionDistance,item,text),
             new PatrolNode(agent,waypoints,player,attackDistance,pickupDetectionDistance,item),
             new RetreatNode(agent,player,moveAwayDistance),
             new ChaseNode(agent,player,attackDistance,moveAwayDistance),
