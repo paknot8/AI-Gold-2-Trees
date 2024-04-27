@@ -28,7 +28,6 @@ public class EnemyBehaviourTreeAgent : MonoBehaviour
 
     void Update()
     {
-        // text.text += "Hoi";
         item = FindAnyObjectByType<Item>();
         behaviourTree?.Update();
     }
@@ -47,9 +46,7 @@ public class EnemyBehaviourTreeAgent : MonoBehaviour
             new ChaseNode(agent,player,attackDistance,moveAwayDistance),
             new ShootNode(agent,player,bulletPrefab,attackDistance,moveAwayDistance),
         };
-
         StatementDebugger(children); // this is only used for testing
-
         behaviourTree = new SequenceNode(children);
     }
 
