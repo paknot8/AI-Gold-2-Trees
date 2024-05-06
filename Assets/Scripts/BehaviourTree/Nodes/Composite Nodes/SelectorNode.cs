@@ -1,18 +1,24 @@
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
-public class SelectorNode : MonoBehaviour
+public class SelectorNode : IBaseNode
 {
-    // Start is called before the first frame update
-    void Start()
+    protected List<IBaseNode> nodes;
+
+    public SelectorNode(List<IBaseNode> nodes)
     {
-        
+        this.nodes = nodes;
     }
 
-    // Update is called once per frame
-    void Update()
+    public virtual bool Update()
     {
-        
+        foreach (IBaseNode node in nodes)
+        {
+            bool result = node.Update();
+            if(result)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 }
