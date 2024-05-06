@@ -8,7 +8,6 @@ public class Enemy : MonoBehaviour
     private IBaseNode behaviourTree = null;
     private Color originalColor; // Variable to store the original color
     private NavMeshAgent agent;
-    public Transform player;
     public GameObject bulletPrefab;
     public Item item;
     public List<Transform> waypoints;
