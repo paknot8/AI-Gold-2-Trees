@@ -17,22 +17,23 @@ public class RetreatNode : IBaseNode
     public virtual bool Update()
     {
         Vector3 playerPosition =  Blackboard.instance.GetPlayerPosition();
-        if(agent != null & playerPosition != null){
-            // Calculate range from stopping distance
+        if(agent != null)
+        {
             float agentToPlayerDistance = Vector3.Distance(agent.transform.position, playerPosition);
 
-            // Check if player is within range
             if (agentToPlayerDistance <= moveAwayDistance)
             {
                 Vector3 targetPosition = CalculateTargetPositionAwayFromPlayer();
 
                 if (IsTargetValidOnNavMesh(targetPosition))
                 {
+                    Blackboard.instance.SetIndicatorText("Aaah! Don't come closer!");
                     agent.SetDestination(targetPosition);
                     ResetWhenStuck();
+                    return true;
                 }
             }
-            return true;
+            return false;
         }
         return false; 
     } 

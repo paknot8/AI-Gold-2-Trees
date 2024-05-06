@@ -33,6 +33,7 @@ public class PatrolNode : IBaseNode
         }
         if (Vector3.Distance(agent.transform.position, Blackboard.instance.GetPlayerPosition()) > shootingDistance)
         {
+            Blackboard.instance.SetIndicatorText("Time to Patrol...");
             MoveToWaypoint();
         }
         return true;
