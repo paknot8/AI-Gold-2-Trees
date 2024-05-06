@@ -3,7 +3,7 @@ using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
-    private readonly float moveSpeed = 15;
+    private readonly float moveSpeed = 8;
     private Vector2 vector;
     private Vector3 moveDirection;
     
