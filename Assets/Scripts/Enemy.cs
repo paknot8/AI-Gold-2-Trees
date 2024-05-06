@@ -34,14 +34,14 @@ public class Enemy : MonoBehaviour
     
     private void CreateBehaviourTree()
     {
-        List<IBaseNode> Passive = new()
+        List<IBaseNode> PassiveMode = new()
         {
             new EnemyTalkNode("Aaah! Don't come closer!",agent,player,text,moveAwayDistance,attackDistance),
             new PickupNode(agent,pickupDetectionDistance,item,text),
             new PatrolNode(agent,waypoints,player,attackDistance,pickupDetectionDistance,item),
         };
 
-        List<IBaseNode> Aggresive = new()
+        List<IBaseNode> AggressiveMode = new()
         {
             new RetreatNode(agent,player,moveAwayDistance),
             new ChaseNode(agent,player,attackDistance,moveAwayDistance),
@@ -50,8 +50,8 @@ public class Enemy : MonoBehaviour
 
         List<IBaseNode> SelectBehaviour = new()
         {
-            new SequenceNode(Aggresive), 
-            new SequenceNode(Passive),
+            new SequenceNode(AggressiveMode), 
+            new SequenceNode(PassiveMode),
         };
 
 
