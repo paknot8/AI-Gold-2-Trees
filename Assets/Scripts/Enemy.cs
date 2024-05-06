@@ -34,16 +34,28 @@ public class Enemy : MonoBehaviour
     
     private void CreateBehaviourTree()
     {
-        List<IBaseNode> children = new()
+        List<IBaseNode> Passive = new()
         {
             new EnemyTalkNode("Aaah! Don't come closer!",agent,player,text,moveAwayDistance,attackDistance),
             new PickupNode(agent,pickupDetectionDistance,item,text),
             new PatrolNode(agent,waypoints,player,attackDistance,pickupDetectionDistance,item),
+        };
+
+        List<IBaseNode> Aggresive = new()
+        {
             new RetreatNode(agent,player,moveAwayDistance),
             new ChaseNode(agent,player,attackDistance,moveAwayDistance),
             new ShootNode(agent,player,bulletPrefab,attackDistance,moveAwayDistance),
         };
-        behaviourTree = new SequenceNode(children);
+
+        List<IBaseNode> SelectBehaviour = new()
+        {
+            new SequenceNode(Aggresive), 
+            new SequenceNode(Passive),
+        };
+
+
+        behaviourTree = new SelectorNode(SelectBehaviour);
     }
 
     // Draw Gizmos to visualize the detection range
