@@ -34,12 +34,8 @@ public class ShootNode : IBaseNode
             agent.transform.LookAt(playerPosition);
             Shoot();
             lastShotTime = Time.time; // Update the last shot time
-            return true;
         }
-        else
-        {
-            return false;
-        }
+        return true;
     }
 
     private void Shoot()

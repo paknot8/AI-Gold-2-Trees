@@ -5,6 +5,7 @@ public class SprintNode : IBaseNode
 {
     private readonly NavMeshAgent agent;
     private Vector3 playerPosition;
+    private float agentToPlayerDistance;
     private readonly float tooCloseDistance;
     private readonly float originalSpeed;
 
@@ -18,7 +19,7 @@ public class SprintNode : IBaseNode
     public virtual bool Update()
     {
         playerPosition = Blackboard.instance.GetPlayerPosition();
-        float agentToPlayerDistance = Vector3.Distance(agent.transform.position, playerPosition);
+        agentToPlayerDistance = Vector3.Distance(agent.transform.position, playerPosition);
 
         if (agentToPlayerDistance <= tooCloseDistance)
         {
@@ -29,7 +30,7 @@ public class SprintNode : IBaseNode
                 Blackboard.instance.SetIndicatorText("You Got me Cornered! Please Move Away!");
             }
         }
-        else if (agentToPlayerDistance >= tooCloseDistance)
+        if (agentToPlayerDistance >= tooCloseDistance)
         {
             agent.speed = originalSpeed; // Revert to original speed when not too close
         }

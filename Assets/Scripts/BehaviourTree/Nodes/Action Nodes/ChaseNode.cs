@@ -26,11 +26,7 @@ public class ChaseNode : IBaseNode
             lastPlayerPosition = playerPosition; // Store the player's position
             agent.SetDestination(lastPlayerPosition);
             agent.GetComponent<Renderer>().material.color = Color.red;
-            return true;
         }
-        else
-        {
-            return false;
-        }
+        return true;
     }
 }

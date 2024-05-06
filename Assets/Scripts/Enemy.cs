@@ -42,22 +42,23 @@ public class Enemy : MonoBehaviour
         {
             new ChaseNode(agent,attackDistance,moveAwayDistance),
             new ShootNode(agent,bulletPrefab,attackDistance,moveAwayDistance),
+            new SequenceNode(IsPlayerTooClose),
         };
 
-        List<IBaseNode> IsPickupAndPatrol = new()
+        List<IBaseNode> IsPlayerNotInLineOfSight = new()
         {
             new PatrolNode(agent,waypoints,attackDistance,pickupDetectionDistance,item),
             new PickupNode(agent,pickupDetectionDistance,item),
         };
 
-        List<IBaseNode> Selector = new()
+        List<IBaseNode> Root = new()
         {
-            new SequenceNode(IsPlayerTooClose),
             new SequenceNode(IsPlayerInLineOfSight), 
-            new SequenceNode(IsPickupAndPatrol),
+            //new SequenceNode(IsPlayerTooClose),
+            new SequenceNode(IsPlayerNotInLineOfSight),
         };
 
-        behaviourTree = new SelectorNode(Selector);
+        behaviourTree = new SelectorNode(Root);
     }
 
     // Draw Gizmos to visualize the detection range

@@ -4,9 +4,11 @@ using UnityEngine.AI;
 public class RetreatNode : IBaseNode
 {
     private readonly NavMeshAgent agent;
+    private Vector3 playerPosition;
+    private Vector3 lastPosition;
     private readonly float moveAwayDistance;
     private float timeStuck = 0.0f;
-    private Vector3 lastPosition;
+    private float agentToPlayerDistance;
 
     public RetreatNode(NavMeshAgent agent, float moveAwayDistance)
     {
@@ -17,24 +19,28 @@ public class RetreatNode : IBaseNode
 
     public virtual bool Update()
     {
-        Vector3 playerPosition = Blackboard.instance.GetPlayerPosition();
-        float agentToPlayerDistance = Vector3.Distance(agent.transform.position, playerPosition);
+        playerPosition = Blackboard.instance.GetPlayerPosition();
+        agentToPlayerDistance = Vector3.Distance(agent.transform.position, playerPosition);
 
         if (agentToPlayerDistance <= moveAwayDistance)
         {
+            
             Vector3 targetPosition = CalculateTargetPositionAwayFromPlayer();
 
             if (IsTargetValidOnNavMesh(targetPosition))
             {
                 Blackboard.instance.SetIndicatorText("Aaah! Don't come closer!");
                 agent.SetDestination(targetPosition);
-                return true;
             }
             // Check for being stuck
             CheckStuck();
             return true;
         }
-        return false;
+        else
+        {
+            return false;
+        }
+        
     }
 
     private Vector3 CalculateTargetPositionAwayFromPlayer()

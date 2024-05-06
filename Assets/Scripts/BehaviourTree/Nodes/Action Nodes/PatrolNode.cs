@@ -22,21 +22,24 @@ public class PatrolNode : IBaseNode
 
     public virtual bool Update()
     {
-        if (waypoints == null)
+        if (waypoints != null)
         {
-            Debug.LogError("Waypoints are not assigned!");
-            return false;
+            if(Vector3.Distance(agent.transform.position, item.transform.position) < pickupDetectionDistance)
+            {
+                return true;
+            }
+            else if (Vector3.Distance(agent.transform.position, Blackboard.instance.GetPlayerPosition()) > shootingDistance)
+            {
+                Blackboard.instance.SetIndicatorText("Time to Patrol...");
+                MoveToWaypoint();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
-        if(item != null && Vector3.Distance(agent.transform.position, item.transform.position) < pickupDetectionDistance)
-        {
-            return true;
-        }
-        if (Vector3.Distance(agent.transform.position, Blackboard.instance.GetPlayerPosition()) > shootingDistance)
-        {
-            Blackboard.instance.SetIndicatorText("Time to Patrol...");
-            MoveToWaypoint();
-        }
-        return true;
+        return false;
     }
 
     public void MoveToWaypoint()
