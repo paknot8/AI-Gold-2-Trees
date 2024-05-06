@@ -54,7 +54,6 @@ public class Enemy : MonoBehaviour
         List<IBaseNode> Root = new()
         {
             new SequenceNode(IsPlayerInLineOfSight), 
-            //new SequenceNode(IsPlayerTooClose),
             new SequenceNode(IsPlayerNotInLineOfSight),
         };
 
