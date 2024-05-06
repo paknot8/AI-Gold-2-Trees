@@ -16,7 +16,7 @@ public class RetreatNode : IBaseNode
     public virtual bool Update()
     {
         playerPosition = Blackboard.instance.GetPlayerPosition();
-        
+
         if (Vector3.Distance(agent.transform.position, playerPosition) <= moveAwayDistance)
         {
             Vector3 targetPosition = CalculateTargetPositionAwayFromPlayer();
@@ -27,32 +27,35 @@ public class RetreatNode : IBaseNode
             }
             return true;
         }
-        else
-        {
-            return false;
-        }
-        
+        return false;
     }
 
     private Vector3 CalculateTargetPositionAwayFromPlayer()
     {
-        agent.GetComponent<Renderer>().material.color = Color.yellow;
+        SetAgentColor(Color.yellow);
 
-        Vector3 retreatDirection = (agent.transform.position - Blackboard.instance.GetPlayerPosition()).normalized;
-        retreatDirection.y = 0f;
-
+        Vector3 retreatDirection = GetRetreatDirection();
         Vector3 targetPosition = agent.transform.position + retreatDirection * 3f;
 
-        if (NavMesh.SamplePosition(targetPosition, out NavMeshHit hit, 1.0f, NavMesh.AllAreas))
+        if (IsTargetValidOnNavMesh(targetPosition))
         {
-            return hit.position;
+            return targetPosition;
         }
 
+        // If the target position is not valid on the NavMesh, return the agent's current position
         return agent.transform.position;
     }
 
-    private bool IsTargetValidOnNavMesh(Vector3 targetPosition)
+    private bool IsTargetValidOnNavMesh(Vector3 targetPosition){
+         return NavMesh.SamplePosition(targetPosition, out _, 1.0f, NavMesh.AllAreas);
+    }
+
+    private void SetAgentColor(Color color) => agent.GetComponent<Renderer>().material.color = color;
+
+    private Vector3 GetRetreatDirection()
     {
-        return NavMesh.SamplePosition(targetPosition, out _, 1.0f, NavMesh.AllAreas);
+        Vector3 retreatDirection = (agent.transform.position - Blackboard.instance.GetPlayerPosition()).normalized;
+        retreatDirection.y = 0f; // Ensure movement is in the horizontal plane
+        return retreatDirection;
     }
 }
