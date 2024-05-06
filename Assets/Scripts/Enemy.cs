@@ -16,19 +16,6 @@ public class Enemy : MonoBehaviour
     private readonly float attackDistance = 15f;
     private readonly float moveAwayDistance = 8f;
     private readonly float tooCloseDistance = 4f;
-
-    void Start()
-    {
-        agent = GetComponent<NavMeshAgent>();
-        originalColor = GetComponent<Renderer>().material.color; // Save the original color
-        CreateBehaviourTree();
-    }
-
-    void Update()
-    {
-        item = FindAnyObjectByType<Item>();
-        behaviourTree?.Update();
-    }
     
     private void CreateBehaviourTree()
     {
@@ -70,6 +57,19 @@ public class Enemy : MonoBehaviour
         behaviourTree = new SelectorNode(Root);
     }
 
+    void Start()
+    {
+        agent = GetComponent<NavMeshAgent>();
+        originalColor = GetComponent<Renderer>().material.color; // Save the original color
+        CreateBehaviourTree();
+    }
+
+    void Update()
+    {
+        item = FindAnyObjectByType<Item>();
+        behaviourTree?.Update();
+    }
+
     // Draw Gizmos to visualize the detection range
     void OnDrawGizmosSelected()
     {
@@ -87,8 +87,5 @@ public class Enemy : MonoBehaviour
     }
 
     // Restore original color when needed
-    public void RestoreOriginalColor()
-    {
-        GetComponent<Renderer>().material.color = originalColor;
-    }
+    public void RestoreOriginalColor() => GetComponent<Renderer>().material.color = originalColor;
 }
