@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using TMPro;
 
-public class EnemyBehaviourTreeAgent : MonoBehaviour
+public class Enemy : MonoBehaviour
 {
     private IBaseNode behaviourTree = null;
     private Color originalColor; // Variable to store the original color
