@@ -45,10 +45,15 @@ public class Enemy : MonoBehaviour
             new SequenceNode(IsPlayerTooClose),
         };
 
+        List<IBaseNode> IsItemInLineOfSight = new()
+        {
+            new PickupNode(agent,pickupDetectionDistance,item),
+        };
+
         List<IBaseNode> IsPlayerNotInLineOfSight = new()
         {
             new PatrolNode(agent,waypoints,attackDistance,pickupDetectionDistance,item),
-            new PickupNode(agent,pickupDetectionDistance,item),
+            new SequenceNode(IsItemInLineOfSight),
         };
 
         List<IBaseNode> Root = new()

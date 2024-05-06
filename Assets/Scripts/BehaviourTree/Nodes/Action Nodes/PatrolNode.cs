@@ -5,6 +5,7 @@ using System.Collections.Generic;
 public class PatrolNode : IBaseNode
 {
     private readonly NavMeshAgent agent;
+    private Vector3 playerPostion;
     private readonly List<Transform> waypoints;
     private int currentWaypointIndex = 0;
     private readonly float shootingDistance;
@@ -22,22 +23,13 @@ public class PatrolNode : IBaseNode
 
     public virtual bool Update()
     {
-        if (waypoints != null)
+        playerPostion = Blackboard.instance.GetPlayerPosition();
+        if (waypoints != null &&
+            Vector3.Distance(agent.transform.position, playerPostion) > shootingDistance)
         {
-            if(Vector3.Distance(agent.transform.position, item.transform.position) < pickupDetectionDistance)
-            {
-                return true;
-            }
-            else if (Vector3.Distance(agent.transform.position, Blackboard.instance.GetPlayerPosition()) > shootingDistance)
-            {
-                Blackboard.instance.SetIndicatorText("Time to Patrol...");
-                MoveToWaypoint();
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            Blackboard.instance.SetIndicatorText("Time to Patrol...");
+            MoveToWaypoint();
+            return true;
         }
         return false;
     }
