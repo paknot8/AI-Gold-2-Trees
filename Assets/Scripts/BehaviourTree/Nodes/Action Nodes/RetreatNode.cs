@@ -4,24 +4,22 @@ using UnityEngine.AI;
 public class RetreatNode : IBaseNode
 {
     private readonly NavMeshAgent agent;
-    private readonly Transform player;
     private readonly float moveAwayDistance;
     private float timeStuck = 0.0f;
     private Vector3 lastStuckPosition;
 
-    public RetreatNode(NavMeshAgent agent, Transform player, float moveAwayDistance)
+    public RetreatNode(NavMeshAgent agent, float moveAwayDistance)
     {
         this.agent = agent;
-        this.player = player;
         this.moveAwayDistance = moveAwayDistance;
     }
 
     public virtual bool Update()
     {
-        if (agent != null && player != null)
-        {
+        Vector3 playerPosition =  Blackboard.instance.GetPlayerPosition();
+        if(agent != null & playerPosition != null){
             // Calculate range from stopping distance
-            float agentToPlayerDistance = Vector3.Distance(agent.transform.position, player.position);
+            float agentToPlayerDistance = Vector3.Distance(agent.transform.position, playerPosition);
 
             // Check if player is within range
             if (agentToPlayerDistance <= moveAwayDistance)
@@ -36,15 +34,14 @@ public class RetreatNode : IBaseNode
             }
             return true;
         }
-        return false;
-    }
-        
+        return false; 
+    } 
 
     private Vector3 CalculateTargetPositionAwayFromPlayer()
     {
         agent.GetComponent<Renderer>().material.color = Color.yellow;
 
-        Vector3 retreatDirection = (agent.transform.position - player.position).normalized; // Move away from the player
+        Vector3 retreatDirection = (agent.transform.position - Blackboard.instance.GetPlayerPosition()).normalized; // Move away from the player
         retreatDirection.y = 0f;
 
         Vector3 targetPosition = agent.transform.position + retreatDirection * 3f; // Move 3 units away from the player

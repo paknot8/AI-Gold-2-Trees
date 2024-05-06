@@ -12,7 +12,7 @@ public class Blackboard : MonoBehaviour
     {
         instance = this;
         player = FindObjectOfType<Player>();
-        indicatorText = GameObject.Find("IndicatorText").GetComponent<TextMeshProUGUI>();
+        indicatorText = GameObject.Find("Dialogue").GetComponent<TextMeshProUGUI>();
     }
 
     public Vector3 GetPlayerPosition()

@@ -5,19 +5,16 @@ using System.Collections.Generic;
 public class PatrolNode : IBaseNode
 {
     private readonly NavMeshAgent agent;
-    private readonly Transform player;
     private readonly List<Transform> waypoints;
     private int currentWaypointIndex = 0;
     private readonly float shootingDistance;
     private readonly float pickupDetectionDistance;
     private readonly Item item;
 
-    public PatrolNode(NavMeshAgent agent, List<Transform> waypoints, Transform player, 
-        float shootingDistance, float pickupDetectionDistance, Item item)
+    public PatrolNode(NavMeshAgent agent, List<Transform> waypoints, float shootingDistance, float pickupDetectionDistance, Item item)
     {
         this.agent = agent;
         this.waypoints = waypoints;
-        this.player = player;
         this.shootingDistance = shootingDistance;
         this.pickupDetectionDistance = pickupDetectionDistance;
         this.item = item;
@@ -34,7 +31,7 @@ public class PatrolNode : IBaseNode
         {
             return true;
         }
-        if (Vector3.Distance(agent.transform.position, player.position) > shootingDistance)
+        if (Vector3.Distance(agent.transform.position, Blackboard.instance.GetPlayerPosition()) > shootingDistance)
         {
             MoveToWaypoint();
         }

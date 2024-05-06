@@ -6,17 +6,15 @@ public class EnemyTalkNode : IBaseNode
 {
     private readonly string dialogue;
     private readonly NavMeshAgent agent;
-    private readonly Transform player;
     private readonly TextMeshProUGUI text;
     private readonly float moveAwayDistance;
     private readonly float attackDistance;
 
-    public EnemyTalkNode(string dialogue, NavMeshAgent agent, Transform player, TextMeshProUGUI text,
+    public EnemyTalkNode(string dialogue, NavMeshAgent agent, TextMeshProUGUI text,
         float moveAwayDistance, float attackDistance)
     {
         this.dialogue = dialogue;
         this.agent = agent;
-        this.player = player;
         this.text = text;
         this.moveAwayDistance = moveAwayDistance;
         this.attackDistance = attackDistance;
@@ -24,18 +22,19 @@ public class EnemyTalkNode : IBaseNode
 
     public virtual bool Update() 
     {
+        Vector3 playerPosition = Blackboard.instance.GetPlayerPosition();
         if(text != null)
         {
-            if(Vector3.Distance(player.transform.position, agent.transform.position) < moveAwayDistance)
+            if(Vector3.Distance(playerPosition, agent.transform.position) < moveAwayDistance)
             {
                 text.text = (dialogue);
             }
-            else if (Vector3.Distance(player.transform.position, agent.transform.position) > moveAwayDistance
-                && Vector3.Distance(player.transform.position, agent.transform.position) < attackDistance)
+            else if (Vector3.Distance(playerPosition, agent.transform.position) > moveAwayDistance
+                && Vector3.Distance(playerPosition, agent.transform.position) < attackDistance)
             {
                 text.text = ("I'm Gonna Get Ya!");
             }
-            else if (Vector3.Distance(player.transform.position, agent.transform.position) > attackDistance)
+            else if (Vector3.Distance(playerPosition, agent.transform.position) > attackDistance)
             {
                 text.text = ("Time to Patrol...");
             }

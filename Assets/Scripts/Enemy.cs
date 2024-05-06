@@ -36,16 +36,16 @@ public class Enemy : MonoBehaviour
     {
         List<IBaseNode> PassiveMode = new()
         {
-            new EnemyTalkNode("Aaah! Don't come closer!",agent,player,text,moveAwayDistance,attackDistance),
+            new EnemyTalkNode("Aaah! Don't come closer!",agent,text,moveAwayDistance,attackDistance),
             new PickupNode(agent,pickupDetectionDistance,item,text),
-            new PatrolNode(agent,waypoints,player,attackDistance,pickupDetectionDistance,item),
+            new PatrolNode(agent,waypoints,attackDistance,pickupDetectionDistance,item),
         };
 
         List<IBaseNode> AggressiveMode = new()
         {
-            new RetreatNode(agent,player,moveAwayDistance),
+            new RetreatNode(agent,moveAwayDistance),
             new ChaseNode(agent,player,attackDistance,moveAwayDistance),
-            new ShootNode(agent,player,bulletPrefab,attackDistance,moveAwayDistance),
+            new ShootNode(agent,bulletPrefab,attackDistance,moveAwayDistance),
         };
 
         List<IBaseNode> SelectBehaviour = new()
