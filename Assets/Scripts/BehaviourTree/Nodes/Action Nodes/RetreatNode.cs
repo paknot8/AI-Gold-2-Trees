@@ -6,53 +6,51 @@ public class RetreatNode : IBaseNode
     private readonly NavMeshAgent agent;
     private readonly float moveAwayDistance;
     private float timeStuck = 0.0f;
-    private Vector3 lastStuckPosition;
+    private Vector3 lastPosition;
 
     public RetreatNode(NavMeshAgent agent, float moveAwayDistance)
     {
         this.agent = agent;
         this.moveAwayDistance = moveAwayDistance;
+        this.lastPosition = agent.transform.position;
     }
 
     public virtual bool Update()
     {
-        Vector3 playerPosition =  Blackboard.instance.GetPlayerPosition();
-        if(agent != null)
+        Vector3 playerPosition = Blackboard.instance.GetPlayerPosition();
+        float agentToPlayerDistance = Vector3.Distance(agent.transform.position, playerPosition);
+
+        if (agentToPlayerDistance <= moveAwayDistance)
         {
-            float agentToPlayerDistance = Vector3.Distance(agent.transform.position, playerPosition);
+            Vector3 targetPosition = CalculateTargetPositionAwayFromPlayer();
 
-            if (agentToPlayerDistance <= moveAwayDistance)
+            if (IsTargetValidOnNavMesh(targetPosition))
             {
-                Vector3 targetPosition = CalculateTargetPositionAwayFromPlayer();
-
-                if (IsTargetValidOnNavMesh(targetPosition))
-                {
-                    Blackboard.instance.SetIndicatorText("Aaah! Don't come closer!");
-                    agent.SetDestination(targetPosition);
-                    ResetWhenStuck();
-                    return true;
-                }
+                Blackboard.instance.SetIndicatorText("Aaah! Don't come closer!");
+                agent.SetDestination(targetPosition);
+                return true;
             }
-            return false;
         }
-        return false; 
-    } 
+
+        // Check for being stuck
+        CheckStuck();
+        return false;
+    }
 
     private Vector3 CalculateTargetPositionAwayFromPlayer()
     {
         agent.GetComponent<Renderer>().material.color = Color.yellow;
 
-        Vector3 retreatDirection = (agent.transform.position - Blackboard.instance.GetPlayerPosition()).normalized; // Move away from the player
+        Vector3 retreatDirection = (agent.transform.position - Blackboard.instance.GetPlayerPosition()).normalized;
         retreatDirection.y = 0f;
 
-        Vector3 targetPosition = agent.transform.position + retreatDirection * 3f; // Move 3 units away from the player
+        Vector3 targetPosition = agent.transform.position + retreatDirection * 3f;
 
         if (NavMesh.SamplePosition(targetPosition, out NavMeshHit hit, 1.0f, NavMesh.AllAreas))
         {
             return hit.position;
         }
 
-        // If not valid, return the agent's position (fallback)
         return agent.transform.position;
     }
 
@@ -61,9 +59,9 @@ public class RetreatNode : IBaseNode
         return NavMesh.SamplePosition(targetPosition, out _, 1.0f, NavMesh.AllAreas);
     }
 
-    private void ResetWhenStuck()
+    private void CheckStuck()
     {
-        if (agent.transform.position == lastStuckPosition)
+        if (agent.transform.position == lastPosition)
         {
             timeStuck += Time.deltaTime;
             if (timeStuck > 1.0f) // Adjust threshold based on your needs
@@ -71,13 +69,13 @@ public class RetreatNode : IBaseNode
                 // Agent is stuck for more than 1 second, reset position or choose new direction
                 agent.Warp(agent.transform.position + Random.insideUnitSphere * 2.0f); // Randomly move the agent a bit
                 timeStuck = 0.0f;
-                lastStuckPosition = Vector3.zero;
+                lastPosition = agent.transform.position;
             }
         }
         else
         {
             timeStuck = 0.0f;
-            lastStuckPosition = agent.transform.position;
+            lastPosition = agent.transform.position;
         }
     }
 }

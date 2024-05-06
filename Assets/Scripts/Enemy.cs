@@ -16,7 +16,8 @@ public class Enemy : MonoBehaviour
     [Header("Ranges")]
     private readonly float pickupDetectionDistance = 20f;
     private readonly float attackDistance = 15f;
-    private readonly float moveAwayDistance = 6f;
+    private readonly float moveAwayDistance = 8f;
+    private readonly float tooCloseDistance = 4f;
 
     void Start()
     {
@@ -36,6 +37,7 @@ public class Enemy : MonoBehaviour
         List<IBaseNode> IsPlayerTooClose = new()
         {
             new RetreatNode(agent,moveAwayDistance),
+            new SprintNode(agent, tooCloseDistance),
         };
 
         List<IBaseNode> IsPlayerInLineOfSight = new()
