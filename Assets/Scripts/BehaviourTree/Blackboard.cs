@@ -7,8 +7,6 @@ public class Blackboard : MonoBehaviour
     public static Blackboard instance;
     private Player player;
     public TextMeshProUGUI indicatorText;
-    public GameObject gameOverScreen;
-    public GameObject victoryScreen;
 
     private void Awake()
     {
