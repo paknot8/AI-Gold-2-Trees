@@ -26,7 +26,7 @@ public class SprintNode : IBaseNode
             agent.speed = 20f; // Increase speed when too close
             if(agentToPlayerDistance <= tooCloseDistance && agent.velocity.magnitude < 0.01f)
             {
-                Blackboard.instance.SetIndicatorText("Damn It! You Got me Cornered!");
+                Blackboard.instance.SetIndicatorText("You Got me Cornered! Please Move Away!");
             }
         }
         else if (agentToPlayerDistance >= tooCloseDistance)
