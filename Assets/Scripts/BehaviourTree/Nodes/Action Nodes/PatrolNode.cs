@@ -27,7 +27,7 @@ public class PatrolNode : IBaseNode
         if (waypoints != null &&
             Vector3.Distance(agent.transform.position, playerPostion) > shootingDistance)
         {
-            Blackboard.instance.SetIndicatorText("Time to Patrol...");
+            Blackboard.instance.SetIndicatorText("Patrolling...");
             MoveToWaypoint();
             return true;
         }

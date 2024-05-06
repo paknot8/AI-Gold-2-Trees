@@ -14,7 +14,6 @@ public class ShootNode : IBaseNode
     private readonly float bulletSpeed = 20f;
     private readonly float bulletLifetime = 3f;
     private float lastShotTime = 0f;
-    
 
     public ShootNode(NavMeshAgent agent, GameObject bulletPrefab, float shootingDistance, float moveAwayDistance)
     {

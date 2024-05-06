@@ -29,7 +29,7 @@ public class RetreatNode : IBaseNode
 
             if (IsTargetValidOnNavMesh(targetPosition))
             {
-                Blackboard.instance.SetIndicatorText("Aaah! Don't come closer!");
+                Blackboard.instance.SetIndicatorText("Retreating...");
                 agent.SetDestination(targetPosition);
             }
             // Check for being stuck

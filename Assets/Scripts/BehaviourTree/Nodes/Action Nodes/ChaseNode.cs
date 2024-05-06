@@ -22,7 +22,7 @@ public class ChaseNode : IBaseNode
         if (Vector3.Distance(agent.transform.position, playerPosition) < attackDistance
             && Vector3.Distance(agent.transform.position, playerPosition) > moveAwayDistance)
         {
-            Blackboard.instance.SetIndicatorText("I'm Gonna Get Ya!");
+            Blackboard.instance.SetIndicatorText("Chasing Player...");
             lastPlayerPosition = playerPosition; // Store the player's position
             agent.SetDestination(lastPlayerPosition);
             agent.GetComponent<Renderer>().material.color = Color.red;
