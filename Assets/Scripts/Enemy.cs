@@ -37,7 +37,7 @@ public class Enemy : MonoBehaviour
         List<IBaseNode> IsPlayerTooClose = new()
         {
             new RetreatNode(agent,moveAwayDistance),
-            new SprintNode(agent, tooCloseDistance),
+            new SprintNode(agent,tooCloseDistance),
         };
 
         List<IBaseNode> IsPlayerInLineOfSight = new()
