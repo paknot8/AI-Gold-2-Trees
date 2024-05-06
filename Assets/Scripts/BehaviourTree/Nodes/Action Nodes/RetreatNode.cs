@@ -30,10 +30,10 @@ public class RetreatNode : IBaseNode
                 agent.SetDestination(targetPosition);
                 return true;
             }
+            // Check for being stuck
+            CheckStuck();
+            return true;
         }
-
-        // Check for being stuck
-        CheckStuck();
         return false;
     }
 

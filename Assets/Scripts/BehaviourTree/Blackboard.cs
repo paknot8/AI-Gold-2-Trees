@@ -6,7 +6,7 @@ public class Blackboard : MonoBehaviour
 {
     public static Blackboard instance;
     private Player player;
-    public TextMeshProUGUI indicatorText;
+    private TextMeshProUGUI indicatorText;
 
     private void Awake()
     {
