@@ -34,15 +34,20 @@ public class Enemy : MonoBehaviour
     {
         List<IBaseNode> IsPlayerTooClose = new()
         {
-            new RetreatNode(agent,moveAwayDistance),
             new SprintNode(agent,tooCloseDistance),
+        };
+
+        List<IBaseNode> IsPlayerNearby = new()
+        {
+            new RetreatNode(agent,moveAwayDistance),
+            new SequenceNode(IsPlayerTooClose),
         };
 
         List<IBaseNode> IsPlayerInLineOfSight = new()
         {
             new ChaseNode(agent,attackDistance,moveAwayDistance),
             new ShootNode(agent,bulletPrefab,attackDistance,moveAwayDistance),
-            new SequenceNode(IsPlayerTooClose),
+            new SequenceNode(IsPlayerNearby),
         };
 
         List<IBaseNode> IsItemInLineOfSight = new()

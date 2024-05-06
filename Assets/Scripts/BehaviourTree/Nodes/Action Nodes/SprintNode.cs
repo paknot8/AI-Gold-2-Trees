@@ -28,6 +28,7 @@ public class SprintNode : IBaseNode
             if(agentToPlayerDistance <= tooCloseDistance && agent.velocity.magnitude < 0.01f)
             {
                 Blackboard.instance.SetIndicatorText("You Got me Cornered! Please Move Away!");
+                return true;
             }
         }
         if (agentToPlayerDistance >= tooCloseDistance)
