@@ -46,8 +46,8 @@ public class Enemy : MonoBehaviour
 
         List<IBaseNode> IsPickupAndPatrol = new()
         {
-            new PickupNode(agent,pickupDetectionDistance,item),
             new PatrolNode(agent,waypoints,attackDistance,pickupDetectionDistance,item),
+            new PickupNode(agent,pickupDetectionDistance,item),
         };
 
         List<IBaseNode> Selector = new()
