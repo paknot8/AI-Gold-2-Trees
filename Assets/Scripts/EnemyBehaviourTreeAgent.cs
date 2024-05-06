@@ -32,9 +32,6 @@ public class EnemyBehaviourTreeAgent : MonoBehaviour
         behaviourTree?.Update();
     }
     
-    // Sequence node, executes child node, one after another. 
-    // if any child node returns false, the sequence node returns false itself
-    // and no further chuld nodes are evaluated (continued).
     private void CreateBehaviourTree()
     {
         List<IBaseNode> children = new()
@@ -46,22 +43,7 @@ public class EnemyBehaviourTreeAgent : MonoBehaviour
             new ChaseNode(agent,player,attackDistance,moveAwayDistance),
             new ShootNode(agent,player,bulletPrefab,attackDistance,moveAwayDistance),
         };
-        StatementDebugger(children); // this is only used for testing
         behaviourTree = new SequenceNode(children);
-    }
-
-    private static void StatementDebugger(List<IBaseNode> children)
-    {
-        int currentNodeIndex = 0;
-        foreach (IBaseNode node in children)
-        {
-            if (!node.Update())
-            {
-                Debug.Log("Node " + currentNodeIndex + " (" + node.GetType().Name + ") returned false.");
-                break;
-            }
-            currentNodeIndex++;
-        }
     }
 
     // Draw Gizmos to visualize the detection range
