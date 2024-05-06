@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-using TMPro;
 
 public class Enemy : MonoBehaviour
 {
@@ -11,7 +10,6 @@ public class Enemy : MonoBehaviour
     public GameObject bulletPrefab;
     public Item item;
     public List<Transform> waypoints;
-    public TextMeshProUGUI text;
 
     [Header("Ranges")]
     private readonly float pickupDetectionDistance = 20f;
@@ -48,7 +46,7 @@ public class Enemy : MonoBehaviour
 
         List<IBaseNode> IsPickupAndPatrol = new()
         {
-            new PickupNode(agent,pickupDetectionDistance,item,text),
+            new PickupNode(agent,pickupDetectionDistance,item),
             new PatrolNode(agent,waypoints,attackDistance,pickupDetectionDistance,item),
         };
 

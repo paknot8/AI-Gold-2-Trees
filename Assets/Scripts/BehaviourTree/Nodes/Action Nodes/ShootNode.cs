@@ -5,12 +5,14 @@ public class ShootNode : IBaseNode
 {
     private readonly NavMeshAgent agent;
     private readonly GameObject bulletPrefab;
+    private GameObject bullet;
     private Vector3 playerPosition;
+    private Vector3 direction;
     private readonly float moveAwayDistance;
     private readonly float shootingDistance;
     private readonly float shootInterval = 1f;
-    private readonly float bulletSpeed = 10f;
-    private readonly float bulletLifetime = 3f; 
+    private readonly float bulletSpeed = 20f;
+    private readonly float bulletLifetime = 3f;
     private float lastShotTime = 0f;
     
 
@@ -24,8 +26,7 @@ public class ShootNode : IBaseNode
 
     public virtual bool Update()
     {   
-        Vector3 playerPosition = Blackboard.instance.GetPlayerPosition();
-        
+        playerPosition = Blackboard.instance.GetPlayerPosition();
         if (Time.time >= lastShotTime + shootInterval 
             && Vector3.Distance(agent.transform.position, playerPosition) < shootingDistance
             && Vector3.Distance(agent.transform.position, playerPosition) > moveAwayDistance)
@@ -43,8 +44,8 @@ public class ShootNode : IBaseNode
 
     private void Shoot()
     {
-        GameObject bullet = GameObject.Instantiate(bulletPrefab, agent.transform.position, Quaternion.identity);
-        Vector3 direction = (playerPosition - agent.transform.position).normalized; // Calculate direction towards the player
+        bullet = GameObject.Instantiate(bulletPrefab, agent.transform.position, Quaternion.identity);
+        direction = (playerPosition - agent.transform.position).normalized; // Calculate direction towards the player
         bullet.transform.rotation = Quaternion.LookRotation(direction); // Rotate the bullet to face the shooting direction
         bullet.GetComponent<Rigidbody>().velocity = direction * bulletSpeed;
         GameObject.Destroy(bullet, bulletLifetime);

@@ -18,6 +18,7 @@ public class ChaseNode : IBaseNode
 
     public virtual bool Update()
     {
+        playerPosition = Blackboard.instance.GetPlayerPosition();
         if (Vector3.Distance(agent.transform.position, playerPosition) < attackDistance
             && Vector3.Distance(agent.transform.position, playerPosition) > moveAwayDistance)
         {
@@ -30,6 +31,6 @@ public class ChaseNode : IBaseNode
         else
         {
             return false;
-        } 
+        }
     }
 }
