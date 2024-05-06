@@ -22,11 +22,16 @@ public class SprintNode : IBaseNode
 
         if (agentToPlayerDistance <= tooCloseDistance)
         {
+            Blackboard.instance.SetIndicatorText("I am faster than you!");
             agent.speed = 20f; // Increase speed when too close
+        }
+        else if (agentToPlayerDistance >= tooCloseDistance)
+        {
+            agent.speed = originalSpeed; // Revert to original speed when not too close
         }
         else
         {
-            agent.speed = originalSpeed; // Revert to original speed when not too close
+            return false;
         }
         return true;
     }
