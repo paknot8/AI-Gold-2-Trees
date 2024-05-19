@@ -8,8 +8,12 @@ public class ShootNode : IBaseNode
     private GameObject bullet;
     private Vector3 playerPosition;
     private Vector3 direction;
+
+    // --- Distances ---
     private readonly float moveAwayDistance;
     private readonly float shootingDistance;
+
+    // --- Shooting and Bullet ---
     private readonly float shootInterval = 1f;
     private readonly float bulletSpeed = 20f;
     private readonly float bulletLifetime = 3f;

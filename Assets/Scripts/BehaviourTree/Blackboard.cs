@@ -1,10 +1,9 @@
-using System.Collections;
 using TMPro;
 using UnityEngine;
 
 public class Blackboard : MonoBehaviour
 {
-    public static Blackboard instance;
+    public static Blackboard instance; // Can be called anywhere.
     private Player player;
     private TextMeshProUGUI indicatorText;
 

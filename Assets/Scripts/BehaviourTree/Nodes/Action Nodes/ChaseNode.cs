@@ -5,9 +5,11 @@ public class ChaseNode : IBaseNode
 {
     private readonly NavMeshAgent agent;
     private Vector3 playerPosition;
+    private Vector3 lastPlayerPosition;
+
+    // --- Distances ---
     private readonly float attackDistance;
     private readonly float moveAwayDistance;
-    private Vector3 lastPlayerPosition; // Store the player's position before resetting the path
 
     public ChaseNode(NavMeshAgent agent, float attackDistance, float moveAwayDistance)
     {

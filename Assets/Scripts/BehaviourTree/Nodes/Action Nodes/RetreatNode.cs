@@ -5,6 +5,8 @@ public class RetreatNode : IBaseNode
 {
     private readonly NavMeshAgent agent;
     private Vector3 playerPosition;
+
+    // --- Distances ---
     private readonly float moveAwayDistance;
 
     public RetreatNode(NavMeshAgent agent, float moveAwayDistance)

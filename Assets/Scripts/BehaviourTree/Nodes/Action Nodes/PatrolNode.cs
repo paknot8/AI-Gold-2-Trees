@@ -5,12 +5,16 @@ using System.Collections.Generic;
 public class PatrolNode : IBaseNode
 {
     private readonly NavMeshAgent agent;
+    private readonly Item item;
     private Vector3 playerPostion;
+
+    // --- Waypoint ---
     private readonly List<Transform> waypoints;
     private int currentWaypointIndex = 0;
+
+    // --- Distances ----
     private readonly float shootingDistance;
     private readonly float pickupDetectionDistance;
-    private readonly Item item;
 
     public PatrolNode(NavMeshAgent agent, List<Transform> waypoints, float shootingDistance, float pickupDetectionDistance, Item item)
     {

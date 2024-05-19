@@ -5,8 +5,10 @@ public class PickupNode : IBaseNode
 {
     private readonly NavMeshAgent agent;
     private Vector3 playerPosition;
-    private readonly float pickupDetectionDistance;
     private readonly Item item; // Reference to the item GameObject
+
+    // --- Distances ---
+    private readonly float pickupDetectionDistance;
 
     public PickupNode(NavMeshAgent agent, float pickupDetectionDistance, Item item)
     {
