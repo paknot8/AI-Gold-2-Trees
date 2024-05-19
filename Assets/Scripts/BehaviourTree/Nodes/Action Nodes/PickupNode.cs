@@ -29,7 +29,7 @@ public class PickupNode : IBaseNode
             // Check if the item is within pickup detection distance
             if (Vector3.Distance(agent.transform.position, item.transform.position) <= pickupDetectionDistance)
             {
-                Blackboard.instance.SetIndicatorText("Goint to Pickup Item...");
+                Blackboard.instance.SetIndicatorText("Going to Pickup Item...");
                 agent.SetDestination(item.transform.position);
                 agent.GetComponent<Renderer>().material.color = Color.green;
                 return true;
