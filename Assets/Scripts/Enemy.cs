@@ -25,6 +25,7 @@ public class Enemy : MonoBehaviour
         List<IBaseNode> IsPlayerTooClose = new()
         {
             new SprintNode(agent,tooCloseDistance),
+            new StandStilNode(agent,tooCloseDistance),
         };
 
         // When player is too near, check if the player is within the distance then retreat for a little bit,
