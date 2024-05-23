@@ -903,6 +903,10 @@ MonoBehaviour:
   - {fileID: 1456752761}
   - {fileID: 50673872}
   - {fileID: 721724585}
+  pickupDetectionDistance: 20
+  attackDistance: 15
+  moveAwayDistance: 8
+  tooCloseDistance: 4
 --- !u!1 &316719987
 GameObject:
   m_ObjectHideFlags: 0
