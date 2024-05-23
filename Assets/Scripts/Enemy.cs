@@ -36,13 +36,20 @@ public class Enemy : MonoBehaviour
             new SequenceNode(IsPlayerTooClose),
         };
 
-        // Is the player in sight, then chase player, when the player is within the shooting distance
-        // Keep shooting at the player, but when the player is too near of the agent then do the check.
+        //  when the player is within the shooting distance, Keep shooting at the player,
+        // but when the player is too near of the agent then do the check.
+        List<IBaseNode> IsPlayerWithinShootingRange = new()
+        {
+            new ShootNode(agent,bulletPrefab,attackDistance,moveAwayDistance),
+            new SequenceNode(IsPlayerNearby),
+        };
+
+        // Is the player in sight, then chase player
+        // but when the player is within the shooting range then do the check
         List<IBaseNode> IsPlayerInLineOfSight = new()
         {
             new ChaseNode(agent,attackDistance,moveAwayDistance),
-            new ShootNode(agent,bulletPrefab,attackDistance,moveAwayDistance),
-            new SequenceNode(IsPlayerNearby),
+            new SequenceNode(IsPlayerWithinShootingRange),
         };
 
         // Is the item in sight then pick it up.
